@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard • SkillMatch+</title>
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="stylesheet" href="../static/css/header-footer.css">
+    <link rel="stylesheet" href="../static/css/dashboard.css"> 
+    <link rel="stylesheet" href="../static/css/modals.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+
+    <!-- LOGGED-IN HEADER -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <h2><i class="fas fa-seedling"></i> SkillMatch+</h2>
+            </div>
+            <nav class="main-nav">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="skillfund.html">SkillFund</a>
+            </nav>
+            <div class="header-right">
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="profile-dropdown" tabindex="0">
+                    <img src="../static/images/avatar.png" alt="Profile" class="profile-pic">
+                    <i class="fas fa-caret-down"></i>
+                    <div class="dropdown-menu">
+                        <a href="profile.html">My Profile</a>
+                        <a href="about.html">About Us</a>
+                        <a href="/settings">Settings</a>
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+
+
+
+
+
+<!-- DASHBOARD WELCOME HERO -->
+<section class="dashboard-welcome">
+    <div class="container">
+        
+            
+            <div class="welcome-text">
+                <h1 class="welcome-title">
+                    Welcome back, <span class="user-name">Mark</span>!
+                </h1>
+                <p class="welcome-subtitle">
+                    Ready to trade skills, fund ideas, or find your next collaborator?
+                </p>
+
+                <div class="welcome-actions">
+                    <button class="btn-primary" data-open-modal="createPostModal">
+                        <i class="fas fa-plus"></i> Create New Post
+                    </button>
+
+                    <a href="skillfund.html" class="btn-secondary">
+                        <i class="fas fa-lightbulb"></i> Post a SkillFund Idea
+                    </a>
+                </div>
+
+                <div class="welcome-stats">
+                    <div class="stat">
+                        <h3>24</h3>
+                        <p>New Posts<br> Today</p>
+                    </div>
+                    <div class="stat">
+                        <h3>08</h3>
+                        <p>Active<br> Projects</p>
+                    </div>
+                    <div class="stat">
+                        <h3>04</h3>
+                        <p>Messages</p>
+                    </div>
+                </div>
+            </div>
+
+           
+    
+    </div>
+    <div class="wave-divider"></div>
+</section>
+
+
+
+
+
+<!-- MAIN CONTENT: POSTS FEED + SIDEBAR -->
+<section class="dashboard-main">
+    <div class="container">
+        <div class="dashboard-grid">
+
+    
+            <div class="posts-feed">
+                <div class="feed-header">
+                    <h2>Post Feeds</h2>
+                    <select class="sort-select">
+                        <option>Most Recent</option>
+                        <option>Highest Rated</option>
+                        <option>Most Active</option>
+                    </select>
+                </div>
+
+                <!-- POST CARD 1 – REQUEST -->
+                <article class="post-card request">
+                    <div class="post-header">
+                        <img src="/static/images/users/user1.jpg" alt="User" class="user-avatar">
+                        <div class="user-info">
+                            <h4>Chioma Okeke  <span class="post-time">2 hours ago</span></h4>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                        <span class="post-type request">Request</span>
+                    </div>
+
+                    <div class="post-content">
+                        <h3>Need a logo designer for my campus startup</h3>
+                        <p>I’m launching a study app and need a clean, modern logo. Can pay in Python tutoring or UI/UX help in return!</p>
+                        <div class="skills-tags">
+                            <span class="tag">Logo Design</span>
+                            <span class="tag">Branding</span>
+                        </div>
+                    </div>
+
+                    <div class="post-footer">
+                        <button class="btn-interested">
+                            <i class="fas fa-check"></i> I’m Interested
+                        </button>
+                        <button class="btn-message">
+                            <i class="fas fa-comment"></i> Message
+                        </button>
+                        <button class="btn-report" data-open-modal="reportPostModal">
+                            <i class="fas fa-flag"></i>
+                        </button>
+
+                        
+                    </div>
+                </article>
+
+                <!-- POST CARD 2 – OFFER -->
+                <article class="post-card offer">
+                    <div class="post-header">
+                        <img src="/static/images/users/user2.jpg" alt="User" class="user-avatar">
+                        <div class="user-info">
+                            <h4>David Mensah <span class="post-time">5 hours ago</span></h4>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> 4.7
+                            </div>
+                        </div>
+                        <span class="post-type offer">Offer</span>
+                    </div>
+
+                    <div class="post-content">
+                        <h3>Offering Python & Django tutoring (Free)</h3>
+                        <p>Final-year CS student. Helping anyone struggling with backend dev. In exchange, I’d love help with public speaking tips!</p>
+                        <div class="skills-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Django</span>
+                            <span class="tag">Backend</span>
+                        </div>
+                    </div>
+
+                    <div class="post-footer">
+                        <button class="btn-interested">
+                            <i class="fas fa-check"></i> I’m Interested
+                        </button>
+                        <button class="btn-message">
+                            <i class="fas fa-comment"></i> Message
+                        </button>
+                        <button class="btn-report" data-open-modal="reportPostModal">
+                            <i class="fas fa-flag"></i>
+                        </button>
+
+                        
+                    </div>
+                </article>
+
+                <!-- More posts will go here -->
+            </div>
+
+            <!-- FILTERS SIDEBAR (RIGHT SIDE) -->
+<aside class="filters-sidebar">
+    <div class="filters-card">
+        <h3 class="filters-title">
+            <i class="fas fa-sliders-h"></i> Filter Feed
+        </h3>
+
+        <!-- Search Bar -->
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search posts, skills, users..." class="search-input">
+        </div>
+
+        <!-- Post Type Filter -->
+        <div class="filter-group">
+            <h4>Post Type</h4>
+            <label class="filter-option">
+                <input type="checkbox" checked> All Posts
+            </label>
+            <label class="filter-option">
+                <input type="checkbox"> <span class="type request">Requests</span>
+            </label>
+            <label class="filter-option">
+                <input type="checkbox"> <span class="type offer">Offers</span>
+            </label>
+        </div>
+
+        <!-- Skill Categories -->
+        <div class="filter-group">
+            <h4>Skill Categories</h4>
+            <div class="checkbox-grid">
+                <label><input type="checkbox" checked> Programming</label>
+                <label><input type="checkbox"> Design</label>
+                <label><input type="checkbox"> Writing</label>
+                <label><input type="checkbox"> Marketing</label>
+                <label><input type="checkbox"> Video Editing</label>
+                <label><input type="checkbox"> Music</label>
+                <label><input type="checkbox"> Languages</label>
+                <label><input type="checkbox"> Business</label>
+            </div>
+        </div>
+
+        <!-- Availability / Level -->
+        <div class="filter-group">
+            <h4>User Level</h4>
+            <label class="filter-option">
+                <input type="radio" name="level"> All Levels
+            </label>
+            <label class="filter-option">
+                <input type="radio" name="level"> Beginner Friendly
+            </label>
+            <label class="filter-option">
+                <input type="radio" name="level"> Intermediate & Above
+            </label>
+        </div>
+
+        <!-- Rating Filter -->
+        <div class="filter-group">
+            <h4>Minimum Rating</h4>
+            <div class="rating-filter">
+                <input type="range" min="0" max="5" step="0.5" value="4" class="rating-slider">
+                <span class="rating-value">4.0 +</span>
+            </div>
+        </div>
+
+        <!-- Apply / Reset -->
+        <div class="filter-actions">
+            <button class="btn-apply">Apply Filters</button>
+            <button class="btn-reset">Reset All</button>
+        </div>
+    </div>
+</aside>
+
+        </div>
+    </div>
+</section>
+
+
+    
+    
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="/about">About Us</a>|
+                <a href="/contact">Contact</a>|
+                <a href="/terms">Terms</a>|
+                <a href="/privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 SkillFund. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+
+
+
+
+
+    <!-- CREATE NEW POST MODAL -->
+<div id="createPostModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Create New Post</h2>
+        <form id="createPostForm">
+            <div class="form-group">
+                <label>Post Type:</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="postType" value="offer" checked> Offer a Skill</label>
+                    <label><input type="radio" name="postType" value="request"> Request Help</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="e.g., 'Need help with Python assignment'" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" placeholder="Briefly describe what you offer or need help with." required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Skill Category:</label>
+                <select id="category" required>
+                    <option value="">Select a category</option>
+                    <option value="programming">Programming</option>
+                    <option value="design">Graphic Design</option>
+                    <option value="writing">Writing / Editing</option>
+                    <option value="tutoring">Tutoring</option>
+                    <option value="other">Others...</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button type="submit" class="btn-apply">Submit Post</button>
+                <!-- <button type="button" class="btn-reset close-modal">Cancel</button> -->
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+<!-- REPORT POST MODAL -->
+<div id="reportPostModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+
+        <h2>Report Post</h2>
+        <p class="modal-info">
+            Help us keep SkillMatch+ safe. Tell us why you are reporting this post.
+        </p>
+
+        <form id="reportPostForm">
+            <div class="form-group">
+                <label for="reportReason">Reason</label>
+                <select id="reportReason" name="reason" required>
+                    <option value="">Select a reason</option>
+                    <option value="spam">Spam or misleading</option>
+                    <option value="inappropriate">Inappropriate content</option>
+                    <option value="scam">Scam or fraud</option>
+                    <option value="harassment">Harassment or abuse</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="reportMessage">Additional details (optional)</label>
+                <textarea id="reportMessage" name="message"
+                          placeholder="Provide more information if necessary..."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="submit" class="btn-apply">Submit Report</button>
+                <!-- <button type="button" class="btn-reset close-modal">Cancel</button> -->
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="../static/js/modals.js"></script>
+</body>
+</html>
