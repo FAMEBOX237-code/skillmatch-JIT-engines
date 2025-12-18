@@ -1,0 +1,473 @@
+/* ===== PUBLIC HEADER (Before Login) ===== */
+
+.public-page {
+    background: #f8fafc;
+}
+
+.public-header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    background: linear-gradient(135deg, #145da0 0%, #0d3b66 100%);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(20, 93, 160, 0.3);
+    z-index: 1000;
+    padding: 16px 0;
+    color: white;
+}
+
+.public-header .logo h2 {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #a8d8ff, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Public navigation */
+.public-nav a {
+    color: #c0e2ff;
+    text-decoration: none;
+    margin: 0 25px;
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.public-nav a:hover,
+.public-nav a.active {
+    color: white;
+}
+
+.public-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+}
+
+/* Public login/register buttons */
+.auth-buttons .btn-login {
+    color: white;
+    text-decoration: none;
+    padding: 10px 24px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.auth-buttons .btn-register {
+    background: white;
+    color: #145da0;
+    text-decoration: none;
+    padding: 10px 28px;
+    border-radius: 50px;
+    font-weight: 700;
+    margin-left: 12px;
+    transition: all 0.3s;
+}
+
+.auth-buttons .btn-login:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+}
+
+.auth-buttons .btn-register:hover {
+    background: #e6f3ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+
+/* ==== MAIN HEADER (After Login) ==== */
+
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 16px 0;
+}
+
+.logo h2 {
+    background: linear-gradient(90deg, #007bff, #00d4ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    font-size: 28px;
+}
+
+/* Navigation (logged in) */
+.main-nav a {
+    margin: 0 20px;
+    text-decoration: none;
+    color: #2d3748;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #007bff;
+}
+
+.main-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #007bff;
+    border-radius: 2px;
+}
+
+
+/* Right side icons */
+.header-right{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.notification {
+    position: relative;
+    font-size: 22px;
+    color: #4a5568;
+    cursor: pointer;
+}
+
+.notification:hover { color: #007bff; }
+
+.badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4757;
+    color: white;
+    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Profile dropdown */
+.profile-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.profile-dropdown:focus .dropdown-menu {
+    display: block;
+}
+
+.profile-dropdown:hover .dropdown-menu,
+.profile-dropdown:focus-within .dropdown-menu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: white;
+    min-width: 180px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+    z-index: 1000;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 14px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.dropdown-menu a:hover {
+    background: #f0f7ff;
+    color: #007bff;
+    padding-left: 25px;
+}
+
+
+/* ========== FOOTER ========== */
+
+.main-footer {
+    background: #145da0;
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+   /*  margin-top: 120px; */
+    font-size: 14px;
+}
+
+.footer-links a {
+    color: #a8d8ff;
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.footer-links a:hover {
+    color: white;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -6px;
+    left: 50%;
+    background: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.footer-links a:hover::after {
+    width: 100%;
+}
+
+.footer-bottom p {
+    font-size: 14px;
+    color: #b0d4ff;
+    margin: 0;
+}
+
+.separator {
+    color: #6bafff;
+    margin: 0 12px;
+    font-weight: bold;
+}
+
+
+
+/* ===== ADMIN HEADER ===== */
+.admin-header {
+   /* position: fixed;*/
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    padding: 14px 0;
+    border-bottom: 3px solid #e74c3c;
+    margin-bottom: 50px;
+}
+
+.admin-header .logo h2 {
+    font-size: 28px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ecf0f1, #bdc3c7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.admin-badge {
+    background: #e74c3c;
+    color: white;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Admin Navigation */
+.admin-nav a {
+    margin: 0 20px;
+    text-decoration: none;
+    color: #ecf0f1;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+    color: #e74c3c;
+}
+
+.admin-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #e74c3c;
+    border-radius: 2px;
+}
+
+/* Admin Info */
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ecf0f1;
+    font-weight: 600;
+    margin-right: 20px;
+}
+
+.admin-info i {
+    color: #e74c3c;
+}
+
+/* Logout Button */
+.btn-logout {
+    background: #e74c3c;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-logout:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+/* ===== ADMIN FOOTER ===== */
+.admin-footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #ecf0f1;
+    text-align: center;
+    padding: 30px 0 25px 0;
+    margin-top: 50px;
+    border-top: 3px solid #e74c3c;
+    font-size: 14px;
+}
+
+.admin-footer .footer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-footer .footer-warning {
+    background: rgba(231, 76, 60, 0.1);
+    border: 1px solid #e74c3c;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin: 0 auto;
+    max-width: 600px;
+    font-size: 12px;
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.admin-footer .footer-links a {
+    color: #bdc3c7;
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.admin-footer .footer-links a:hover {
+    color: #e74c3c;
+    text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.admin-footer .footer-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -6px;
+    left: 50%;
+    background: #e74c3c;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.admin-footer .footer-links a:hover::after {
+    width: 100%;
+}
+
+.admin-footer .footer-bottom p {
+    font-size: 14px;
+    color: #95a5a6;
+    margin: 0;
+}
+
+.admin-footer .separator {
+    color: #e74c3c;
+    margin: 0 12px;
+    font-weight: bold;
+}
+
+/* FORGOT PASSWORD SPECIFIC */
+.success-box {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid #16a34a;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    margin: 30px 0;
+    color: white;
+}
+.success-box i {
+    font-size: 3rem;
+    color: #16a34a;
+    margin-bottom: 15px;
+}
+.verify-code {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 10px;
+    margin: 20px 0;
+    color: #ffd166;
+}
+.small {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
