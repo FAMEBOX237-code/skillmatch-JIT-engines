@@ -8,11 +8,15 @@ a final year school project which is all about developing a student community wh
 - **templates/**  
   - about.html
   - EditProfilepage.html
+  - dashboard.html
 - **static/**  
   - **css/**  
     - about.css  
     - edit profile.css
-  - **js/** (empty for now)  
+    - dashboard.css
+    - modals.css
+  - **js/** 
+    - modals.js
   - **images/** 
 
 # tasks
