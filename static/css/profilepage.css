@@ -1,0 +1,324 @@
+
+/* ================================
+   PROFILE TOP SECTION
+   ================================ */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #145da0 ;
+    color: #333;
+}
+.profile-top {
+     display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+.profile-container {
+    text-align: center;
+    padding: 20px;
+}
+/* Profile Picture */
+.profile-avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    margin-bottom: 15px;
+}
+/* Name */
+.profile-name {
+    font-size: 10px;
+    font-weight: 250;
+    margin-bottom: 5px;
+    color: white; /* stays consistent with your page background */
+}
+/* Role */
+.profile-role {
+    font-size: 18px;
+    color: #e0eaff;
+    margin-bottom: 10px;
+}
+/* Rating */
+.profile-rating {
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+.profile-rating .reviews {
+    color: #cfe2ff;
+}
+/* Buttons (Pill Style) */
+.profile-actions {
+    margin-bottom: 25px;
+}
+.btn-primary {
+    background: white;
+    color: #145da0;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px;   /* ← pill shape */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+.btn-primary:hover {
+    background: #e7f1ff;
+    transform: translateY(-2px);
+}
+/* Bio Box */
+.bio-card {
+    background: white;
+    padding: 20px 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    font-size: 16px;
+    color: #444;
+}
+
+/* Responsive */
+@media (max-width: 100px) {
+    .container { flex-direction: column; gap: 15px; }
+    .main-nav a { margin: 0 10px; font-size: 14px; }
+    .footer-links a { margin: 8px 12px; display: inline-block;}
+}
+/* 
+   MY TASKS SECTION
+                     */
+.tasks-section {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+/* Section Title */
+.section-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+/* Tabs */
+.task-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+.task-tabs .tab {
+    background: rgba(255,255,255,0.8);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.task-tabs .tab:hover {
+    background: white;
+    transform: translateY(-2px);
+}
+.task-tabs .tab.active {
+    background: white;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+/* Card Wrapper */
+.task-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    margin-bottom: 35px;
+    
+}
+/* Section Headers */
+.task-status {
+    font-size: 18px;
+    font-weight: 700;
+    color: #d4dce4;
+    margin-top: 2px;
+    text-align: center;
+}
+/* Individual Task Item */
+.task-item {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 15px 0;
+}
+.task-item:last-child {
+    border-bottom: none;
+}
+/* Task Text */
+.task-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 4px;
+}
+.task-meta {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+.task-sub {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+/* Button */
+.task-btn {
+    background: #145da0;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+}
+.task-btn:hover {
+    background: #0f4379;
+    transform: translateY(-2px);
+}
+/* General Layout Improvements */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
+    padding-top: 110px;   /* cleaner spacing under fixed header */
+}
+
+/* Center content and improve readability */
+.profile-container,
+.tasks-section {
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* Beautiful modern cards */
+.bio-card,
+.task-card {
+    border-radius: 18px;
+    padding: 35px 10px;
+    background: white;
+    box-shadow:
+        0 6px 15px rgba(0,0,0,0.1),
+        0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.bio-card:hover,
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 26px rgba(0,0,0,0.15),
+        0 6px 12px rgba(0,0,0,0.08);
+}
+
+/* Cleaner section titles */
+.section-title {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    color: white;
+    letter-spacing: 0.6px;
+}
+
+/* Task titles spacing */
+.task-item {
+    padding: 16px 0;
+    margin-top: 1px;}
+
+/* Buttons Modern Enhancement */
+.btn-primary,
+.task-btn {
+    transition: 0.25s ease;
+}
+
+.btn-primary:hover,
+.task-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Tabs improved look */
+.task-tabs .tab {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    transition: 0.25s ease;
+}
+
+.task-tabs .tab:hover {
+    transform: translateY(-3px);
+}
+
+/* Profile Name & Role */
+.profile-name {
+    font-size: 32px;
+    font-weight: 900;
+    margin-top: 10px;
+}
+
+.profile-role {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* Text hierarchy improvements */
+.task-title {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.task-meta {
+    font-size: 15px;
+}
+
+.task-sub {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Spacing between task cards */
+.task-card {
+    margin-bottom: 40px;
+}
+/* Default: no scrollbar visible */
+.task-card {
+    max-height: 300px;   /* adjust if you want */
+    overflow-y: hidden;
+    transition: 0.2s;
+}
+
+/* On hover: scrollbar appears */
+.task-card:hover {
+    overflow-y: auto;
+}
+
+/* Scrollbar styling */
+.task-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.task-card::-webkit-scrollbar-track {
+    background: #e6e6e6;
+    border-radius: 10px;
+}
+
+.task-card::-webkit-scrollbar-thumb {
+    background: #145da0;
+    border-radius: 10px;
+}
+
+.task-card::-webkit-scrollbar-thumb:hover {
+    background: #0f4379;
+}

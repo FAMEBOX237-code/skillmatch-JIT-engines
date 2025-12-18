@@ -8,13 +8,16 @@ a final year school project which is all about developing a student community wh
 - **templates/**  
   - about.html
   - EditProfilepage.html
+  - Profilepage.html
 - **static/**  
   - **css/**  
     - about.css  
     - edit profile.css
+    - profile page.css
   - **js/** (empty for now)  
   - **images/** 
 
 # tasks
 - about us page, FAMEBOX237-code
 - edit ptofile page, YEFF190
+- profilepage, YEFF190
