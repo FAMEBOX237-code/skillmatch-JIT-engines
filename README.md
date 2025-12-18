@@ -7,12 +7,15 @@ a final year school project which is all about developing a student community wh
 
 - **templates/**  
   - about.html
+  - homepage.html
 
 - **static/**  
   - **css/**  
     - about.css  
+    - homepage.css
   - **js/** (empty for now)  
   - **images/** 
 
 # tasks
-- about us page, FAMEBOX237-code
+- about us page ui, FAMEBOX237-code
+- homepage ui, lankokoayinda-lab
