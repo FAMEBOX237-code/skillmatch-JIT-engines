@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="../static/css/editprofile.css">
+    <link rel="stylesheet" href="../static/css/header-footer.css">
+    <link rel="stylesheet" href="../static/css/global.css">
+    <!-- This icon library gives us the bell & profile icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+      <!-- ======= HEADER START ======= -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <h2>SkillMatch+</h2>
+            </div>
+
+            <nav class="main-nav">
+                <a href="#">Dashboard</a>
+                <a href="#">SkillFund</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+
+                <div class="profile-dropdown">
+                    <div></div>
+                    <img src="avatar.png" alt="Profile" class="profile-pic">
+                    <i class="fas fa-caret-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="#">My Profile</a>
+                        <a href="#">Settings</a>
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Edit profile Page Starts-->
+    <section>
+     <div class="over-all-container">
+       <div class="edit-container"> 
+           <img src="../static/images/avatar.png" alt="Change Profile picture" class="profile-avatar">
+           <div class="edit-actions"> 
+            <button class="btnedit-primary">Upload New Image</button>
+           </div>
+           
+           <div class="information-container">
+             <form action="">
+             <LAbel for="Name"></LAbel> 
+             <input type = "Name" placeholder="Full Name" id="Name">
+              </form>
+           </div>
+            <div class="information-container">
+             <form action="">
+             <LAbel for="Bio"></LAbel> 
+             <input type = "Bio" placeholder="Bio" id="Bio">
+              </form>
+           </div>
+           <div class="information-container">
+             <form action="">
+             <LAbel for="Skills"></LAbel> 
+             <input type = "Skills" placeholder="Skills" id="Skills">
+              </form>
+           </div>
+     </div>
+     </div>
+        <div class="decision-container">
+            <button class="decision-button">Save Changes</button>
+            <button class="decision-button">Cancel</button>
+        </div>
+
+    </section>
+   <!-- ======= FOOTER START ======= -->
+<footer class="main-footer">
+    <div class="container footer-container">
+        <!-- Top Links -->
+        <div class="footer-links">
+            <a href="#">About Us</a>|
+            <a href="#">Contact</a>|
+            <a href="#">Terms</a>|
+            <a href="#">Privacy Policy</a>
+        </div>
+
+        <!-- Bottom Line -->
+        <div class="footer-bottom">
+            <p>© 2025 SkillMatch+ <span class="separator">|</span> JIT Engines</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
