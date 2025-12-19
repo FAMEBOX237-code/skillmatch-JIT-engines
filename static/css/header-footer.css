@@ -471,7 +471,24 @@
     opacity: 0.8;
     font-size: 0.9rem;
 }
-/* ========== FOOTER ========== */
+/* ========== Profile FOOTER ========== */
+
+/* Footer */
+.main-footer {
+    background: #145da0;
+    color: white;
+    text-align: center;
+    padding: 50px 0 30px;
+    margin-top: 120px;
+    font-size: 14px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
 /* .footer-links {
     margin-bottom: 25px;
 } */
