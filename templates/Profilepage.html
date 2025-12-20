@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - SkillMatch+</title>
+    <link rel="stylesheet" href="../static/css/profilepage.css">
+    <!-- This icon library gives us the bell & profile icons -->
+    <link rel="stylesheet" href="../static/css/header-footer.css">
+    <link rel="stylesheet" href="../static/css/global.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+     <!-- ======= HEADER START ======= -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <h2>SkillMatch+</h2>
+            </div>
+
+            <nav class="main-nav">
+                <a href="#">Dashboard</a>
+                <a href="#">SkillFund</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+
+                <div class="profile-dropdown">
+                    <div></div>
+                    <img src="../static/images/avatar.png" alt="Profile" class="profile-pic">
+                    <i class="fas fa-caret-down"></i>
+
+                    <div class="dropdown-menu">
+                        <a href="#">My Profile</a>
+                        <a href="#">Settings</a>
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+ <!-- ===== PROFILE TOP SECTION ===== -->
+<section class="profile-top">
+    <div class="profile-container">
+
+        <!-- Profile Picture -->
+        <img src="../static/images/avatar.png" alt="Profile Picture" class="profile-avatar">
+        
+        <!-- Name / Role / Rating -->
+        <h2 class="profile-name">USER'S NAME</h2>
+        <p class="profile-role">Student / Sponsor</p>
+        
+        <div class="profile-rating">
+            <span class="stars">⭐ 4.8</span>
+            <span class="reviews">(127 reviews)</span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="profile-actions">
+            <button class="btn-primary">Edit Profile</button>
+            <!-- For other users: <button class="btn-primary">Send Message</button> -->
+        </div>
+
+        <!-- Bio Section -->
+        <div class="bio-card">
+            <p>
+                Passionate about web design and innovation.
+                Add your phone number, location, and a brief bio here
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== MY TASKS SECTION ===== -->
+<section class="tasks-section">
+    
+    <h2 class="section-title">My Tasks</h2>
+    <!-- ONGOING TASKS -->
+    <header class="task-status">ONGOING PROJECTS</header> 
+    <div class="task-card">
+        <!-- Task 1 -->
+        <div class="task-item">
+            <p class="task-title">▸ Design a logo for my startup</p>
+            <p class="task-meta">With: Sarah L. ⭐4.9</p>
+            <p class="task-sub">Status: In discussion...</p>
+            <button class="task-btn">Mark as Complete</button>
+        </div>
+
+        <!-- Task 2 -->
+        <div class="task-item">
+            <p class="task-title">▸ Python tutoring sessions</p>
+            <p class="task-meta">With: David K. ⭐4.5</p>
+            <p class="task-sub">Status: 2 sessions left</p>
+            <div class = "task-container"><button class="task-btn">Mark as Complete</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- COMPLETED TASKS -->
+    <header class="task-status">COMPLETED PROJECTS</header>
+    <div class="task-card">
+         <!-- Completed 1 -->
+        <div class="task-item">
+            <p class="task-title">▸ Build a landing page</p>
+            <p class="task-meta">With: Mark N. ⭐4.8</p>
+            <p class="task-sub">Status: Rated ★★★★★</p>
+        </div>
+
+        <!-- Completed 2 -->
+        <div class="task-item">
+            <p class="task-title">▸ Write a business plan</p>
+            <p class="task-meta">With: Raissa L. ⭐4.6</p>
+            <p class="task-sub">Status: Rated ★★★★☆</p>
+        </div>
+       
+    </div>
+</section>
+
+    
+
+    
+    
+
+    <!-- ======= FOOTER START ======= -->
+<footer class="main-footer">
+    <div class="container footer-container">
+        <!-- Top Links -->
+        <div class="footer-links">
+            <a href="#">About Us</a>|
+            <a href="#">Contact</a>|
+            <a href="#">Terms</a>|
+            <a href="#">Privacy Policy</a>
+        </div>
+
+        <!-- Bottom Line -->
+        <div class="footer-bottom">
+            <p>© 2025 SkillMatch+ <span class="separator">|</span> JIT Engines</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
