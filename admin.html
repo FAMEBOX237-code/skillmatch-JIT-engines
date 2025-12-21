@@ -5,17 +5,28 @@
     <head>
         <title>Admin Dashboard</title>
     </head>
-    <header class="main-header">
-        <div class="logo">SkillMatch<span>+</span></div>
-        <nav class="main-nav">
-        </nav>
-        <div class="header-actions">
-            <a href="#">SkillFund</a>
-            <div class="notification">
-                <i class="fa-solid fa-bell"></i>
-                <span class="count">5</span>
+     <!-- LOGGED-IN HEADER -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="logo">
+                <h2><i class="fas fa-seedling"></i> SkillMatch+</h2>
             </div>
-            <a href="#">Logout</a>
+            <nav class="admin-nav">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="skillfund.html">SkillFund</a>
+            </nav>
+            <div class="admin-info">
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="dropdown-menu">
+                    <a href="about.html">About Us</a><a hr
+                    <a href="/settings">Settings</a>
+                    <a href="#"><button class="btn-logout">Logout</button></a>
+                </div>
+                </div>
+            </div>
         </div>
     </header>
     <br>
@@ -282,15 +293,17 @@
         </table>
         </div>
     </body>
-    <footer class="main-footer">
-    <div class="footer-links">
-      <a href="#">About Us</a> |
-      <a href="#">Contact Us</a> |
-      <a href="#">Privacy Policy</a> |
-      <a href="#">Terms</a>
-    </div>
-    <div class="footer-text">
-      ©️ SkillMatch+ | JIT Engines
-    </div>
-  </footer>
+    <footer class="admin-footer">
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="/about">About Us</a>|
+                <a href="/contact">Contact</a>|
+                <a href="/terms">Terms</a>|
+                <a href="/privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 SkillFund. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 </html>
