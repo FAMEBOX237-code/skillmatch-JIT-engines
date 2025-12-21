@@ -10,19 +10,22 @@ a final year school project which is all about developing a student community wh
   - EditProfilepage.html
   - dashboard.html
   - Profilepage.html
+  - admin.html
 - **static/**  
   - **css/**  
     - about.css  
     - edit profile.css
+    - profile page.css
     - dashboard.css
     - modals.css
+    - admin.css
   - **js/** 
     - modals.js
-    - profile page.css
   - **js/** (empty for now)  
   - **images/** 
 
 # tasks
 - about us page, FAMEBOX237-code
-- edit ptofile page, YEFF190
+- edit profile page, YEFF190
 - profilepage, YEFF190
+- admin page, brendagracie971-ux

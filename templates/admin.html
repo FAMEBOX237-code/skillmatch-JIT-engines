@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin Dashboard</title>
+        <link rel="stylesheet" href="../static/css/admin.css">
+        <link rel="stylesheet" href="../static/css/header-footer.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    </head>
+     <!-- LOGGED-IN HEADER -->
+    <header class="admin-header">
+        <div class="container-a">
+            <div class="logo-a">
+                <h2><i class="fas fa-seedling"></i> SkillMatch+</h2>
+            </div>
+            <nav class="admin-nav">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="skillfund.html">SkillFund</a>
+            </nav>
+            <div class="admin-info">
+                <div class="notification-a">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                    <a href="#"><button class="btn-logout">Logout</button></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <br>
+    <br>
+    <body>
+        <!--Creating the reports and logs section-->
+        <div class="container-a">
+        <h1>Reports and Logs</h1>
+            <!-- Top Controls -->
+        <div class="header-bar">
+        <div class="show">
+            <label>Show:</label>
+            <select>
+                <option>All</option>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+            </select>
+        </div>
+        <div class="filter">
+            <label>Filter By:</label>
+            <select>
+                <option>All</option>
+                <option>Reports</option>
+                <option>Logs</option>
+                <option>User Activity</option>
+            </select>
+        </div>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Date and Time</th>
+                <th>Description</th>
+                <th colspan="2">Actions</th>
+            </tr>
+            <tr>
+                <td>User login</td>
+                <td>04/12/2025 13:46</td>
+                <td>Multiple login attempts from a user</td>
+                <td class="actions">
+                    <button class="view">View</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Server Error</td>
+                <td>07/12/2025 11:21</td>
+                <td>unexpected error encountered by an internal server</td>
+                <td class="actions">
+                    <button class="view">View</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Weekly User Login Report</td>
+                <td>11/12/2025 02:11</td>
+                <td>Last week user login report</td>
+                <td class="actions">
+                    <button class="view">View</button>
+                </td>
+        </table>
+        </div>
+        <!--User management section to view, block, unblock and delete users-->
+        <div class="container">
+            <h1>User Management</h1>
+            <!-- Top Controls -->
+            <div class="header-bar">
+                <div class="show">
+                    <label>Show:</label>
+                    <select>
+                        <option>All</option>
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                    </select>
+                </div>
+
+                <div class="filter">
+                    <label>Filter By:</label>
+                    <select>
+                        <option>All</option>
+                        <option>Student</option>
+                        <option>Sponsor</option>
+                        <option>Admin</option>
+                    </select>
+               </div>
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th colspan="4">Actions</th>
+                </tr>
+                <tr>
+                    <td>Kokomo Franck</td>
+                    <td>Student</td>
+                    <td class="actions">
+                        <button class="view">View</button>
+                        <button class="block">Suspend</button>
+                        <button class="unblock">Activate</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nditapah Mark</td>
+                    <td>Admin</td>
+                     <td class="actions">
+                        <button class="view">View</button>
+                        <button class="block">Suspend</button>
+                        <button class="unblock">Activate</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ayinda Raissa</td>
+                    <td>Sponsor</td>
+                     <td class="actions">
+                        <button class="view">View</button>
+                        <button class="block">Suspend</button>
+                        <button class="unblock">Activate</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Beyala Pauline</td>
+                    <td>Sponsor</td>
+                     <td class="actions">
+                        <button class="view">View</button>
+                        <button class="block">Suspend</button>
+                        <button class="unblock">Activate</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Fotsi Yann</td>
+                    <td>Student</td>
+                     <td class="actions">
+                        <button class="view">View</button>
+                        <button class="block">Suspend</button>
+                        <button class="unblock">Activate</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nganso Brenda</td>
+                    <td>Student</td>
+                     <td class="actions">
+                        <button class="view">View</button>
+                        <button class="block">Suspend</button>
+                        <button class="unblock">Activate</button>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        <!--SkillFund projects management to either view, approve or disapprove project request-->
+            <div class="container">
+            <h1>SkillFund Projects</h1>
+             <!-- Top Controls -->
+             <div class="header-bar">
+                <div class="show">
+                    <label>Show:</label>
+                    <select>
+                        <option>All</option>
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                    </select>
+                </div>
+
+                <div class="filter">
+                    <label>Filter By:</label>
+                    <select>
+                        <option>All</option>
+                        <option>Pending</option>
+                        <option>Approved</option>
+                        <option>Disapproved</option>
+                    </select>
+               </div>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th colspan="3">Actions</th>
+                </tr>
+                <tr>
+                    <td>SOS Blood</td>
+                    <td>Fotsi Yann</td>
+                    <td>Medical</td>
+                    <td>A platform to help hospitals communicate with each other for blood supplies and connect with donors</td>
+                    <td class="actions">
+                        <button class="view">View</button>
+                        <button class="approve">Approve</button>
+                        <button class="disapprove">Disapprove</button>
+                    </td>
+                </tr><tr>
+                    <td>Yummy Zone</td>
+                    <td>Nganso Brenda</td>
+                    <td>Food and Beverage</td>
+                    <td>The only spot you need to enjoy your coffee breaks.</td>
+                    <td class="actions">
+                        <button class="view">View</button>
+                        <button class="approve">Approve</button>
+                        <button class="disapprove">Disapprove</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sports Go</td>
+                    <td>Kokomo Franck</td>
+                    <td>Fashion</td>
+                    <td>Hey! Want to get the latest sports wear? Then you've hit the jackpot plus customization is also available</td>
+                    <td class="actions">
+                        <button class="view">View</button>
+                        <button class="approve">Approve</button>
+                        <button class="disapprove">Disapprove</button>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        <!--Managing user posts (view, or delete)-->
+        <div class="container">
+        <h1>Post Management</h1>
+        <!-- Top Controls -->
+        <div class="header-bar">
+            <div class="show">
+                <label>Show:</label>
+                <select>
+                    <option>All</option>
+                    <option>10</option>
+                    <option>25</option>
+                    <option>50</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Filter By:</label>
+                <select>
+                    <option>All</option>
+                    <option></option>
+                    <option>Deleted</option>
+                </select>
+            </div>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Preview</th>
+                <th colspan="2">Actions</th>
+            </tr>
+            <tr>
+                <td>Flask</td>
+                <td>Kokomo Franck</td>
+                <td>Technology</td>
+                <td>Want to learn how flask works? Contact me</td>
+                <td class="actions">
+                    <button class="view">View</button>
+                    <button class="delete">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Urgent!!!!!!</td>
+                <td>Nganso Brenda</td>
+                <td>Other</td>
+                <td>Hello everyone! Hope you are fine ohh. I'm in need of some urgent 2k needed. Please make wuna help your sister</td>
+                <td class="actions">
+                    <button class="view">View</button>
+                    <button class="delete">Delete</button>
+                </td>
+            </tr>
+        </table>
+        </div>
+    </body>
+    <footer class="admin-footer">
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="/about">About Us</a>|
+                <a href="/contact">Contact</a>|
+                <a href="/terms">Terms</a>|
+                <a href="/privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 SkillFund. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</html>

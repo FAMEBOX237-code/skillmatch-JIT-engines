@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  background-color: #fdfdfd99;
+}
+.container{
+  max-width:2000px;
+  margin:0 auto;
+}
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+/* Button Colors */
+.actions .view {
+    background: #2196f3;
+    color: #fff;
+}
+
+.actions .approve, .download, .unblock {
+    background: #4caf50;
+    color: #fff;
+}
+
+.actions .delete, .disapprove, .block {
+    background: #f44336;
+    color: #fff;
+}
+/* Hover Effect */
+.actions button:hover {
+    opacity: 0.9;
+}
+.header-bar .filter{
+  align-self: left;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+/*Table design*/
+table th, td {
+    padding: 15px;
+    border-bottom: 1px solid #e6e6e6;
+    text-align: left;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: left;
+}
+th {
+    background: #e9ecef;
+    text-align: left;
+}
