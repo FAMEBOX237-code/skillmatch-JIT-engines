@@ -11,6 +11,7 @@ a final year school project which is all about developing a student community wh
   - dashboard.html
   - Profilepage.html
   - admin.html
+  - skillfund.html
 - **static/**  
   - **css/**  
     - about.css  
@@ -19,9 +20,9 @@ a final year school project which is all about developing a student community wh
     - dashboard.css
     - modals.css
     - admin.css
+    - skillfund.css
   - **js/** 
-    - modals.js
-  - **js/** (empty for now)  
+    - modals.js 
   - **images/** 
 
 # tasks
@@ -29,3 +30,4 @@ a final year school project which is all about developing a student community wh
 - edit profile page, YEFF190
 - profilepage, YEFF190
 - admin page, brendagracie971-ux
+- skillfund, donald167
