@@ -8,6 +8,7 @@
     <!-- This icon library gives us the bell & profile icons -->
     <link rel="stylesheet" href="../static/css/header-footer.css">
     <link rel="stylesheet" href="../static/css/global.css"> 
+    <link rel="stylesheet" href="../static/css/modals.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -90,7 +91,7 @@
             <p class="task-title">▸ Design a logo for my startup</p>
             <p class="task-meta">With: Sarah L. ⭐4.9</p>
             <p class="task-sub">Status: In discussion...</p>
-            <button class="task-btn">Mark as Complete</button>
+           <button class="btn-primary" data-open-modal="completeTaskModal">Mark Task as Complete</button>
         </div>
 
         <!-- Task 2 -->
@@ -98,7 +99,7 @@
             <p class="task-title">▸ Python tutoring sessions</p>
             <p class="task-meta">With: David K. ⭐4.5</p>
             <p class="task-sub">Status: 2 sessions left</p>
-            <div class = "task-container"><button class="task-btn">Mark as Complete</button>
+            <button class="btn-primary" data-open-modal="completeTaskModal">Mark Task as Complete</button>
         </div>
       </div>
     </div>
@@ -147,5 +148,74 @@
     </div>
 </footer>
 
+<!-- TASK COMPLETION MODAL -->
+<div class="modal" id="completeTaskModal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+
+        <h2>Confirm Task Completion</h2>
+
+        <p class="modal-info">
+            You are about to mark this task as <strong>completed</strong>.
+            This action cannot be undone.
+        </p>
+
+        <div class="form-group">
+            <label>Task</label>
+            <input type="text" value="Design a logo for my startup" disabled>
+        </div>
+
+        <div class="form-group">
+            <label>Collaborator</label>
+            <input type="text" value="Sarah L." disabled>
+        </div>
+
+        <div class="modal-actions">
+            <!-- <button class="btn-secondary close-modal">Cancel</button> -->
+            <button  class="btn-submit" data-next-modal="ratingModal">
+               Yes, Mark as Complete
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- RATING MODAL -->
+<div class="modal" id="ratingModal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+
+        <h2>Rate Your Collaborator</h2>
+
+        <p class="modal-info">
+            Please rate your experience working with <strong>Sarah L.</strong>
+        </p>
+
+        <div class="form-group">
+            <label>Rating</label>
+            <div class="radio-group">
+                <label><input type="radio" name="rating" value="1"> ⭐</label>
+                <label><input type="radio" name="rating" value="2"> ⭐⭐</label>
+                <label><input type="radio" name="rating" value="3"> ⭐⭐⭐</label>
+                <label><input type="radio" name="rating" value="4"> ⭐⭐⭐⭐</label>
+                <label><input type="radio" name="rating" value="5"> ⭐⭐⭐⭐⭐</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Review (optional)</label>
+            <textarea placeholder="Write a short review..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+            <!-- <button class="btn-secondary close-modal">Skip for Now</button> -->
+            <button class="btn-submit">
+                Submit Rating
+            </button>
+        </div>
+    </div>
+</div>
+<script src="../static/js/modals.js"></script>
 </body>
 </html>
