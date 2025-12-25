@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login • SkillMatch+</title>
+
+    <link rel="stylesheet" href="../static/css/global.css">
+    <link rel="stylesheet" href="../static/css/login_registration.css">
+    <link rel="stylesheet" href="../static/css/modals.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="auth-page">
+
+    <!-- GLOBAL MESSAGE BOX -->
+<div class="app-message" id="appMessage">
+    <span class="message-icon"></span>
+    <span class="message-text"></span>
+</div>
+
+
+    <div class="auth-container">
+
+        <h2 class="logo-title">SkillMatch+</h2>
+        <h1>login</h1>
+        <p>Sign in to your account to continue.</p>
+
+        <form action="#" method="POST">
+
+            <div class="form">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" required>
+                <label for="email">Email Address</label>
+            </div>
+
+            <div class="form">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" required>
+                <label for="password">Password</label>
+            </div>
+
+            <a href="#" class="forgot-password" data-open-modal="forgotPasswordModal">
+                Forgot Password?
+            </a>
+
+
+            <button type="submit" class="auth-btn">Sign In</button>
+
+        </form>
+
+        <div class="switch-text">
+            Don't have an account? <a href="register.html">Register Here</a>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- FORGOT PASSWORD MODAL -->
+<div id="forgotPasswordModal" class="modal">
+    <div class="modal-content">
+
+        <!-- Close button -->
+        <span class="close-modal">&times;</span>
+
+        <h2>Forgot Password</h2>
+
+        <p class="modal-info">
+            Enter your registered email address.<br>
+            If it exists, you will be allowed to reset your password.
+        </p>
+
+        <form>
+            <div class="form-group">
+                <label for="forgotEmail">Email Address</label>
+                <input type="email" id="forgotEmail" required placeholder="you@example.com">
+            </div>
+
+            <div class="modal-actions">
+                <!-- This button moves to RESET PASSWORD MODAL -->
+                <button
+                    type="button"
+                    class="btn-apply"
+                    data-next-modal="resetPasswordModal">
+                    Verify Email
+                </button>
+
+                <!-- <button type="button" class="btn-reset close-modal">
+                    Cancel
+                </button> -->
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+<!-- RESET PASSWORD MODAL -->
+<div id="resetPasswordModal" class="modal">
+    <div class="modal-content">
+
+        <span class="close-modal">&times;</span>
+
+        <h2>Reset Password</h2>
+
+        <p class="modal-info">
+            Create a new password for your account.
+        </p>
+
+        <form>
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" required>
+            </div>
+
+            <div class="modal-actions">
+                <button type="submit" class="btn-apply">
+                    Update Password
+                </button>
+
+                <!-- <button type="button" class="btn-reset close-modal">
+                    Cancel
+                </button> -->
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+<script src="../static/js/modals.js"></script>
+</body>
+</html>
+
