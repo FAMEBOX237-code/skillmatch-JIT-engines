@@ -16,11 +16,11 @@
 
 <body class="auth-page">
 
-    <!-- GLOBAL MESSAGE BOX -->
-<div class="app-message" id="appMessage">
+    <div class="app-message" id="appMessage">
     <span class="message-icon"></span>
     <span class="message-text"></span>
-</div>
+    </div>
+
 
 
     <div class="auth-container">
@@ -29,40 +29,53 @@
         <h1>Create Your Account</h1>
         <p>Join the SkillMatch+ community today.</p>
 
-        <form action="#" method="POST">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-container">
+              {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+
+        <form action="/register" method="POST">
 
             <div class="form">
                 <i class="fas fa-user"></i>
-                <input type="text" id="name" required>
+                <input type="text" name="name" id="name" required>
                 <label for="name">Full Name</label>
             </div>
 
             <div class="form">
                 <i class="fas fa-envelope"></i>
-                <input type="email" id="email" required>
+                <input type="email" name="email" id="email" required>
                 <label for="email">Email Address</label>
             </div>
 
             <div class="form">
                 <i class="fas fa-graduation-cap"></i>
-                <input type="text" id="skills" required>
+                <input type="text" name="skills" id="skills" required>
                 <label for="skills">Skills (Student) / Interests (Sponsor)</label>
             </div>
 
             <div class="form">
                 <i class="fas fa-lock"></i>
-                <input type="password" id="password" required>
+                <input type="password" name="password" id="password" required>
                 <label for="password">Password</label>
             </div>
 
             <div class="form">
                 <i class="fas fa-lock"></i>
-                <input type="password" id="confirm-password" required>
+                <input type="password" name="confirm-password" id="confirm-password" required>
                 <label for="confirm-password">Confirm Password</label>
             </div>
 
             <div class="role-selection">
-                <div class="radio-group">
+                <div class="radio">
                     <input type="radio" name="role" id="student" value="student" checked>
                     <label for="student">Student</label>
                 </div>
@@ -84,10 +97,9 @@
         </form>
 
         <div class="switch-text">
-            Already have an account? <a href="login.html">Sign In Here</a>
+            Already have an account? <a href="/login">Sign In Here</a>
         </div>
 
     </div>
 
 </body>
-</html>
