@@ -6,6 +6,7 @@
     <title>Dashboard • SkillMatch+</title>
     <link rel="stylesheet" href="../static/css/global.css">
     <link rel="stylesheet" href="../static/css/header-footer.css">
+    <link rel="stylesheet" href="../static/css/messages.css">
     <link rel="stylesheet" href="../static/css/dashboard.css"> 
     <link rel="stylesheet" href="../static/css/modals.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -21,7 +22,7 @@
             </div>
             <nav class="main-nav">
                 <a href="dashboard.html" class="active">Dashboard</a>
-                <a href="skillfund.html">SkillFund</a>
+                <a href="/skillfund">SkillFund</a>
             </nav>
             <div class="header-right">
                 <div class="notification">
@@ -32,21 +33,27 @@
                     <img src="../static/images/avatar.png" alt="Profile" class="profile-pic">
                     <i class="fas fa-caret-down"></i>
                     <div class="dropdown-menu">
-                        <a href="profile.html">My Profile</a>
+                        <a href="/profile">My Profile</a>
                         <a href="about.html">About Us</a>
                         <a href="/settings">Settings</a>
-                        <a href="#">Logout</a>
+                        <a href="/logout">Logout</a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-
-
-
-
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-containers">
+          {% for category, message in messages %}
+            <div class="flash-messages {{ category }}">
+                {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
 
 
 <!-- DASHBOARD WELCOME HERO -->
@@ -56,7 +63,7 @@
             
             <div class="welcome-text">
                 <h1 class="welcome-title">
-                    Welcome back, <span class="user-name">Mark</span>!
+                    Welcome back, <span class="user-name">{{session.user_name}}</span>!
                 </h1>
                 <p class="welcome-subtitle">
                     Ready to trade skills, fund ideas, or find your next collaborator?
@@ -74,22 +81,15 @@
 
                 <div class="welcome-stats">
                     <div class="stat">
-                        <h3>24</h3>
+                        <h3>{{ new_posts_today }}</h3>
                         <p>New Posts<br> Today</p>
                     </div>
                     <div class="stat">
-                        <h3>08</h3>
-                        <p>Active<br> Projects</p>
-                    </div>
-                    <div class="stat">
-                        <h3>04</h3>
-                        <p>Messages</p>
+                        <h3>{{ my_posts }}</h3>
+                        <p>my personal<br> Posts</p>
                     </div>
                 </div>
             </div>
-
-           
-    
     </div>
     <div class="wave-divider"></div>
 </section>
@@ -115,85 +115,70 @@
                 </div>
 
                 <!-- POST CARD 1 – REQUEST -->
-                <article class="post-card request">
+                {% for post in posts %}
+                <article class="post-card {{ post.post_type }}">
+
                     <div class="post-header">
-                        <img src="/static/images/users/user1.jpg" alt="User" class="user-avatar">
+                        <img src="{{ post.profile_picture or '/static/images/avatar.png' }}" 
+                            class="user-avatar">
+
                         <div class="user-info">
-                            <h4>Chioma Okeke  <span class="post-time">2 hours ago</span></h4>
+                            <h4>
+                                {{ post.full_name }}
+                                <span class="post-time">
+                                    {{ post.created_at| time_since }}
+                                </span>
+                            </h4>
                             <div class="rating">
-                                <i class="fas fa-star"></i> 4.9
+                    <i class="fas fa-star"></i> 4.9
                             </div>
                         </div>
-                        <span class="post-type request">Request</span>
+
+                    <span class="post-type {{ post.post_type }}">
+                    {{ post.post_type |capitalize }} 
+                            
+                    </span>
                     </div>
 
                     <div class="post-content">
-                        <h3>Need a logo designer for my campus startup</h3>
-                        <p>I’m launching a study app and need a clean, modern logo. Can pay in Python tutoring or UI/UX help in return!</p>
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.description }}</p>
+
                         <div class="skills-tags">
-                            <span class="tag">Logo Design</span>
-                            <span class="tag">Branding</span>
+                            {% for skill in post.skills %}
+                                <span class="tag">{{ skill.name }}</span>
+                            {% endfor %}
                         </div>
                     </div>
 
                     <div class="post-footer">
+                        <form action="/posts/{{ post.id }}/interest" method="POST">
                         <button class="btn-interested">
-                            <i class="fas fa-check"></i> I’m Interested
+                <i class="fas fa-check"></i> I'm Interested
                         </button>
+                    </form>
+
                         <button class="btn-message">
-                            <i class="fas fa-comment"></i> Message
+                    <i class="fas fa-comment"></i> Message
                         </button>
+
                         <button class="btn-report" data-open-modal="reportPostModal">
-                            <i class="fas fa-flag"></i>
+                    <i class="fas fa-flag"></i>
                         </button>
-
-                        
                     </div>
+
                 </article>
-
-                <!-- POST CARD 2 – OFFER -->
-                <article class="post-card offer">
-                    <div class="post-header">
-                        <img src="/static/images/users/user2.jpg" alt="User" class="user-avatar">
-                        <div class="user-info">
-                            <h4>David Mensah <span class="post-time">5 hours ago</span></h4>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 4.7
-                            </div>
-                        </div>
-                        <span class="post-type offer">Offer</span>
-                    </div>
-
-                    <div class="post-content">
-                        <h3>Offering Python & Django tutoring (Free)</h3>
-                        <p>Final-year CS student. Helping anyone struggling with backend dev. In exchange, I’d love help with public speaking tips!</p>
-                        <div class="skills-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Django</span>
-                            <span class="tag">Backend</span>
-                        </div>
-                    </div>
-
-                    <div class="post-footer">
-                        <button class="btn-interested">
-                            <i class="fas fa-check"></i> I’m Interested
-                        </button>
-                        <button class="btn-message">
-                            <i class="fas fa-comment"></i> Message
-                        </button>
-                        <button class="btn-report" data-open-modal="reportPostModal">
-                            <i class="fas fa-flag"></i>
-                        </button>
-
-                        
-                    </div>
-                </article>
+                {% else %}
+                <p>No posts yet. Be the first to create one!</p>
+                {% endfor %}
+                
 
                 <!-- More posts will go here -->
             </div>
 
             <!-- FILTERS SIDEBAR (RIGHT SIDE) -->
 <aside class="filters-sidebar">
+    <form action="/dashboard" method="GET">
     <div class="filters-card">
         <h3 class="filters-title">
             <i class="fas fa-sliders-h"></i> Filter Feed
@@ -202,36 +187,33 @@
         <!-- Search Bar -->
         <div class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search posts, skills, users..." class="search-input">
+            <input type="text" placeholder="Search posts, skills, users..." name="search" value="{{ request.args.get('search','')}}" class="search-input">
         </div>
 
         <!-- Post Type Filter -->
         <div class="filter-group">
             <h4>Post Type</h4>
             <label class="filter-option">
-                <input type="checkbox" checked> All Posts
+                <input type="checkbox" name="type" value="request" {% if request.args.get('type') == 'request' %}checked{% endif %}> <span class="type request">Requests</span>
             </label>
             <label class="filter-option">
-                <input type="checkbox"> <span class="type request">Requests</span>
-            </label>
-            <label class="filter-option">
-                <input type="checkbox"> <span class="type offer">Offers</span>
+                <input type="checkbox" name="type" value="offer" {% if request.args.get('type') == 'offer' %}checked{% endif %}> <span class="type offer">Offers</span>
             </label>
         </div>
 
         <!-- Skill Categories -->
         <div class="filter-group">
             <h4>Skill Categories</h4>
-            <div class="checkbox-grid">
-                <label><input type="checkbox" checked> Programming</label>
-                <label><input type="checkbox"> Design</label>
-                <label><input type="checkbox"> Writing</label>
-                <label><input type="checkbox"> Marketing</label>
-                <label><input type="checkbox"> Video Editing</label>
-                <label><input type="checkbox"> Music</label>
-                <label><input type="checkbox"> Languages</label>
-                <label><input type="checkbox"> Business</label>
-            </div>
+            <select class="skills-select" name="skills" multiple size="6">
+                {% for skill in skills%}
+                    <option value="{{skill.id}}" 
+                    {% if skill.id|string in selected_skills %}selected{% endif%}>
+                        {{ skill.name }}
+                    </option>
+                {% endfor %}
+                </select>
+                
+                
         </div>
 
         <!-- Availability / Level -->
@@ -259,10 +241,11 @@
 
         <!-- Apply / Reset -->
         <div class="filter-actions">
-            <button class="btn-apply">Apply Filters</button>
-            <button class="btn-reset">Reset All</button>
+            <button type="submit"class="btn-apply">Apply Filters</button>
+            <a href="/dashboard" class="btn-reset">Reset All</a>
         </div>
     </div>
+    </form>
 </aside>
 
         </div>
@@ -298,12 +281,12 @@
     <div class="modal-content">
         <span class="close-modal">&times;</span>
         <h2>Create New Post</h2>
-        <form id="createPostForm">
+        <form id="createPostForm" action="/create-post" method="POST">
             <div class="form-group">
                 <label>Post Type:</label>
                 <div class="radio-group">
-                    <label><input type="radio" name="postType" value="offer" checked> Offer a Skill</label>
-                    <label><input type="radio" name="postType" value="request"> Request Help</label>
+                    <label><input type="radio" name="post_type" value="offer" checked> Offer a Skill</label>
+                    <label><input type="radio" name="post_type" value="request"> Request Help</label>
                 </div>
             </div>
             <div class="form-group">
@@ -312,19 +295,17 @@
             </div>
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" placeholder="Briefly describe what you offer or need help with." required></textarea>
+                <textarea id="description" name = "description" placeholder="Briefly describe what you offer or need help with." required></textarea>
             </div>
             <div class="form-group">
                 <label for="category">Skill Category:</label>
-                <select id="category" required>
-                    <option value="">Select a category</option>
-                    <option value="programming">Programming</option>
-                    <option value="design">Graphic Design</option>
-                    <option value="writing">Writing / Editing</option>
-                    <option value="tutoring">Tutoring</option>
-                    <option value="other">Others...</option>
+            <select class="skills-select" name="skills[]" multiple required>
+                {% for skill in skills%}
+                    <option value="{{skill.id}}">
+                        {{ skill.name }}
+                    </option>
+                {% endfor %}
                 </select>
-            </div>
             <div class="modal-actions">
                 <button type="submit" class="btn-apply">Submit Post</button>
                 <!-- <button type="button" class="btn-reset close-modal">Cancel</button> -->

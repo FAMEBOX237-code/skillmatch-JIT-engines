@@ -1,0 +1,40 @@
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from database import get_db_connection
+import pymysql
+
+project = Blueprint("project",__name__)
+
+@project.route("/create-project", methods=["POST"])
+def create_project():
+    if "user_id" not in session:
+        flash("Please login to create a project.", "error")
+        return redirect(url_for("auth.login"))
+    user_id = session["user_id"]
+    project_title = request.form.get("projectTitle")
+    project_description = request.form.get("projectDescription")
+    funding_goal = request.form.get("fundingGoal")
+    required_skills = request.form.get("requiredSkills")
+    profile_picture = request.form.get("profilePicture")
+    category = request.form.getlist("category[]")
+    if not project_title or not project_description or not funding_goal or not required_skills or not category:
+        flash("All fields are required.", "error")
+        return redirect(url_for("skillfund.skillfund_home"))
+    user_id = session["user_id"]
+    
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    cursor.execute("""
+        INSERT INTO project (user_id, project_title, project_description, funding_goal, required_skills)
+        VALUES (%s, %s, %s, %s, %s)
+    """, (user_id, project_title, project_description, funding_goal, required_skills))
+    project_id = cursor.lastrowid
+    
+    for category_id in category:
+         cursor.execute("""
+             INSERT INTO project_category (project_id, category_id) VALUES (%s, %s)
+         """, (project_id, category_id))
+    connection.commit()
+    cursor.close()
+    connection.close()
+    flash("Project submitted successfully!", "success")
+    return redirect(url_for("skillfund.skillfund_home"))

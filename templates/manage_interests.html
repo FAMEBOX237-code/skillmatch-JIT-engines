@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profilepage.css') }}">
+    <link rel="stylesheet" href="../static/css/header-footer.css">
+    <link rel="stylesheet" href="../static/css/global.css"> 
+    <link rel="stylesheet" href="../static/css/modals.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+<div class="page-container">
+
+    <h1 class="page-title">
+        Interested Users for “{{ post.title }}”
+    </h1>
+
+    {% if interests %}
+        <div class="interests-list">
+
+            {% for interest in interests %}
+                <div class="interest-card">
+
+                    <!-- Avatar -->
+                    <img src="{{ url_for('static', filename='images/avatar.png') }}"
+                         class="interest-avatar">
+
+                    <!-- User Info -->
+                    <div class="interest-info">
+                        <h3>{{ interest.full_name }}</h3>
+                        <p class="rating">⭐ 4.8 (24 reviews)</p>
+                    </div>
+
+                    <!-- Status / Action -->
+                    <div class="interest-action">
+
+                        {% if interest.status == "pending" %}
+                            <form action="{{ url_for('profile.accept_interest') }}" method="POST">
+                                <input type="hidden" name="interest_id" value="{{ interest.interest_id }}">
+                                <input type="hidden" name="post_id" value="{{ post.id }}">
+
+                                <button type="submit" class="btn-primary">
+                                    Accept
+                                </button>
+                            </form>
+                        {% elif interest.status == "accepted" %}
+                            <span class="status accepted">Accepted</span>
+                        {% else %}
+                            <span class="status rejected">Rejected</span>
+                        {% endif %}
+
+
+                    </div>
+
+                </div>
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <p class="empty-state">
+                No users have shown interest yet.
+        </p>
+    {% endif %}
+
+</div>
+</body>
+</html>
