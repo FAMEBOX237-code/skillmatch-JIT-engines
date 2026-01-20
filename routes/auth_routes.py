@@ -70,7 +70,7 @@ def login():
         if user["role"] == "student":
             return redirect(url_for("dashboard.dashboard_home"))
         elif user["role"] == "sponsor":
-            return redirect(url_for("dashboard.skillfunds"))
+            return redirect(url_for("skillfund.skillfund_home"))
         else:
             return redirect(url_for("admin.admin_dasboard"))
 

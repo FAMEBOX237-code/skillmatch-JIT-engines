@@ -8,7 +8,7 @@ import pymysql
 skillfund = Blueprint("skillfund", __name__)
 
 @skillfund.route("/skillfund")
-@login_required(role="student")
+@login_required(role=["student", "sponsor"])
 def skillfund_home():
     connection = get_db_connection()
     cursor = connection.cursor(pymysql.cursors.DictCursor)
