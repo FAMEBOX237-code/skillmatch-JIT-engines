@@ -38,75 +38,50 @@ window.addEventListener('click', (event) => {
 
 
 
-// ===============================
-// MODAL TO MODAL TRANSITION (GLOBAL)
-// ===============================
+const params = new URLSearchParams(window.location.search);
+if (params.has('reset') === true ) {
+    const modal = document.getElementById('resetPasswordModal');
+    if (modal) {
+        modal.classList.add("show");
+    }
+}
 
-// 6. Find all buttons that open another modal
-const nextModalButtons = document.querySelectorAll('[data-next-modal]');
 
-// 7. Loop through them
-nextModalButtons.forEach(button => {
-    button.addEventListener('click', () => {
 
-        // a) Find the current open modal
-        const currentModal = button.closest('.modal');
+      // Handle Accept button clicks
+document.querySelectorAll('.accept-collaboration-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        // Optional: Confirm before accepting
+        if (confirm(`Accept collaboration with ${this.closest('.interested-user').querySelector('.user-name').textContent}?`)) {
+            
+            // Visual feedback: change button to "Accepted"
+            this.textContent = 'Accepted';
+            this.classList.add('accepted');
+            this.disabled = true;
 
-        // b) Get the ID of the next modal
-        const nextModalId = button.getAttribute('data-next-modal');
-        const nextModal = document.getElementById(nextModalId);
+            // TODO: Here you would send data to your backend
+            // Example: fetch('/accept-collaboration', { method: 'POST', body: JSON.stringify({ userId: ..., postId: ... }) })
 
-        // c) Close current modal
-        currentModal.classList.remove('show');
-
-        // d) Open next modal
-        nextModal.classList.add('show');
+            alert('Collaboration accepted! You can now message them.');
+        }
     });
 });
 
+// AUTO-HIDE FLASH MESSAGES AFTER 6 SECONDS
+setTimeout(() => {
+    const messages = document.querySelectorAll('.flash-messages');
+    messages.forEach(msg => {
+        msg.style.opacity = '0';
+        setTimeout(() => msg.remove(), 500);
+    });
+}, 6000);
 
 
 
-
-// ===============================
-// GLOBAL MESSAGE HANDLER
-// ===============================
-
-/**
- * showMessage(type, text)
- * type: success | error | info | warning
- * text: string message to display
- */
-function showMessage(type, text) {
-
-    // 1. Get the message container
-    const messageBox = document.getElementById('appMessage');
-
-    // 2. Safety check (in case page has no message box)
-    if (!messageBox) return;
-
-    // 3. Reset previous state
-    messageBox.className = 'app-message';
-
-    // 4. Apply new message type
-    messageBox.classList.add(type);
-
-    // 5. Set icon based on type
-    const iconMap = {
-        success: '✔️',
-        error: '❌',
-        info: 'ℹ️',
-        warning: '⚠️'
-    };
-
-    messageBox.querySelector('.message-icon').textContent = iconMap[type];
-    messageBox.querySelector('.message-text').textContent = text;
-
-    // 6. Show message
-    messageBox.style.display = 'flex';
-
-    // 7. Auto-hide after 4 seconds
-    setTimeout(() => {
-        messageBox.style.display = 'none';
-    }, 4000);
-}
+const slider = document.getElementById("ratingSlider");
+    const output = document.getElementById("ratingValue");
+    if (slider && output) {
+        slider.addEventListener("input", function() {
+            output.textContent = slider.value + " +";
+        });
+    }

@@ -128,7 +128,7 @@
     display: grid;
     grid-template-columns: 1fr 340px;
     gap: 40px;
-    max-width: 1400px;
+    width: 1300px;
     margin: 0 auto;
 }
 
@@ -332,8 +332,8 @@
 .filters-sidebar {
     position: sticky;
     top: 100px;           /* Sticks below header */
-    align-self: flex-start;
-    height: fit-content;
+    height: calc(100vh - 120px); /* Full viewport height minus padding */
+    overflow: auto;
 }
 
 .filters-card {
@@ -466,6 +466,33 @@
     font-weight: 600;
     cursor: pointer;
     width: 100%;
+    text-align: center;
+    text-decoration: none;
+}
+
+.skills-select {
+    width: 100%;
+    min-height: 140px;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    background: #ffffff;
+    outline: none;
+    transition: all 0.3s ease;
+
+}
+.skills-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 4px rgba(0,123,255,0.1);
+}
+.skills-select option {
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+.skills-select option:checked {
+    background: #007bff;
+    color: #ffffff;
 }
 
 /* Mobile: Hide sidebar by default, show toggle */
