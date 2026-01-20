@@ -1,5 +1,6 @@
 from routes.auth_routes import auth
 from flask import Flask
+from routes.home_routes import home
 from routes.dashboard_routes import dashboard
 from utils.time_helpers import time_since
 from datetime import timedelta
@@ -7,6 +8,8 @@ from routes.skillfund_routes import skillfund
 from routes.project_routes import project
 from utils.login_limiter import limiter
 from utils.error_handlers import register_error_handlers
+
+
 
 app = Flask(__name__)
 app.secret_key="skillmatch_secret_key"
@@ -18,6 +21,7 @@ limiter.init_app(app)
 register_error_handlers(app)
 app.register_blueprint(dashboard)
 app.register_blueprint(auth)
+app.register_blueprint(home)
 app.register_blueprint(skillfund)
 app.register_blueprint(project)
 
