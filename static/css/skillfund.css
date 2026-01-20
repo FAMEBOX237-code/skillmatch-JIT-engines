@@ -1,6 +1,3 @@
-/* ===== SKILLFUND SPECIFIC STYLES ===== */
-
-
 
 /* FILTERS SECTION */
 .skillfund-filters {
@@ -71,11 +68,9 @@
     transform: translateY(-2px);
 }
 
-
 .hero-cta {
     background: #145da0;
     color: white;
-    border: 2px solid #145da0;
     padding: 16px 40px;
     border-radius: 50px;
     font-size: 1.1rem;
@@ -88,9 +83,8 @@
 }
 
 .hero-cta:hover {
-    transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,123,255,0.4);
+    transform: translateY(-1.5px); 
 }
-
 
 
 /* PROJECTS GRID */
@@ -157,14 +151,6 @@
     position: relative;
 }
 
-.project-card.featured {
-    border: 3px solid #ffd166;
-}
-
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 60px rgba(10, 37, 64, 0.2);
-}
 
 .project-badge {
     position: absolute;
@@ -280,6 +266,7 @@
     font-weight: 600;
 }
 
+
 /* FUNDING SECTION */
 .project-funding {
     background: #f8fafc;
@@ -358,7 +345,7 @@
 
 .btn-support {
     flex: 1;
-    background: linear-gradient(135deg, #145da0, #1c86c9);
+    background: linear-gradient(135deg, #0e3b64, #35acf6);
     color: white;
     border: none;
     padding: 14px;
@@ -420,8 +407,8 @@
 
 .btn-load:hover {
     background: #f0f7ff;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(20, 93, 160, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(143, 198, 250, 0.2);
 }
 
 /* HOW IT WORKS */
@@ -483,151 +470,4 @@
 .step p {
     color: #c0e2ff;
     line-height: 1.6;
-}
-
-/* SKILLFUND MODAL SPECIFIC */
-.skillfund-modal {
-    max-width: 700px;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.file-upload {
-    margin-top: 8px;
-}
-
-.file-label {
-    display: inline-block;
-    background: #f1f5f9;
-    color: #475569;
-    padding: 12px 24px;
-    border-radius: 12px;
-    cursor: pointer;
-    border: 2px dashed #cbd5e1;
-    text-align: center;
-    width: 100%;
-    transition: all 0.3s;
-}
-
-.file-label:hover {
-    background: #e2e8f0;
-    border-color: #145da0;
-}
-
-.btn-submit {
-    background: linear-gradient(135deg, #145da0, #1c86c9);
-    color: white;
-    border: none;
-    padding: 16px 40px;
-    border-radius: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: all 0.3s;
-}
-
-.btn-submit:hover {
-    background: linear-gradient(135deg, #1c86c9, #2ea8e6);
-    transform: translateY(-2px);
-}
-
-.btn-cancel {
-    background: #f1f5f9;
-    color: #475569;
-    border: 2px solid #cbd5e1;
-    padding: 16px 30px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-}
-
-.btn-cancel:hover {
-    background: #e2e8f0;
-}
-
-.category-select {
-    width: 100%;
-    min-height: 140px;
-    padding: 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 16px;
-    font-size: 0.95rem;
-    background: #ffffff;
-    outline: none;
-    transition: all 0.3s ease;
-
-}
-.category-select:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 4px rgba(0,123,255,0.1);
-}
-.category-select option {
-    padding: 8px 10px;
-    border-radius: 8px;
-}
-.category-select option:checked {
-    background: #007bff;
-    color: #ffffff;
-}
-
-/* RESPONSIVE DESIGN */
-@media (max-width: 1024px) {
-    .hero-visual {
-        display: none;
-    }
-    
-    .projects-grid {
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 3rem;
-    }
-    
-    .hero-stats {
-        gap: 30px;
-    }
-    
-    .hero-stats .stat h3 {
-        font-size: 2.5rem;
-    }
-    
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .project-actions {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 480px) {
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .category-pills {
-        justify-content: flex-start;
-        overflow-x: auto;
-        padding-bottom: 10px;
-    }
-    
-    .pill {
-        white-space: nowrap;
-    }
 }
