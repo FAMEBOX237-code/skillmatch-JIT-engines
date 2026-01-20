@@ -19,3 +19,30 @@ body {
     align-items: center;
     justify-content: space-between;
 }
+
+
+
+.btn-disabled {
+    background-color: #ccc;
+    color: #666;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: not-allowed;
+    font-weight: 600;
+}
+
+.btn-disabled:hover {
+    background-color: #ccc;
+}
+
+
+
+.status.locked {
+    background: #f1c40f;
+    color: #000;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
