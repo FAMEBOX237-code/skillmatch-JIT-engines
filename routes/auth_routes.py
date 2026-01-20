@@ -1,3 +1,4 @@
+import re
 import pymysql
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -20,6 +21,11 @@ def register():
         raw_password = request.form["password"]
         confirm_password = request.form["confirm-password"]
         role = request.form["role"]
+
+        #Implementing strong password policy
+        if len(raw_password) < 8 or not re.search(r"[A-Z]", raw_password) or not re.search(r"[a-z]", raw_password) or not re.search(r"[0-9]", raw_password) or not re.search(r"[!@#$%^&*(),.?\":{}|<>]", raw_password):
+            flash("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.", "error")
+            return redirect(url_for("auth.register"))
 
         # Check if passwords match
         if raw_password != confirm_password:
