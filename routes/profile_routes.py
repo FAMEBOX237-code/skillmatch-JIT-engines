@@ -309,6 +309,7 @@ def accept_interest():
         WHERE id = %s
     """, (interest_id,))
 
+
     #  Reject all other interests
     cursor.execute("""
         UPDATE post_interests

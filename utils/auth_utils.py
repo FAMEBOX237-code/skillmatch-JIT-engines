@@ -30,3 +30,4 @@ def login_required(role=None):
             return f(*args, **kwargs)
         return wrapped
     return decorator
+
