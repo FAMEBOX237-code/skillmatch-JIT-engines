@@ -4,7 +4,6 @@ from routes.dashboard_routes import dashboard
 from routes.post_routes import post
 from datetime import timedelta
 from utils.time_helpers import time_since
-from routes.skillfund_routes import skillfund
 
 
 app = Flask(__name__)
@@ -15,7 +14,6 @@ app.permanent_session_lifetime = timedelta(days=1)
 app.register_blueprint(dashboard)
 app.register_blueprint(auth)
 app.register_blueprint(post)
-app.register_blueprint(skillfund)
 
 @app.after_request
 def disable_caching(response):
