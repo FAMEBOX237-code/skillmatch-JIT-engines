@@ -1,10 +1,13 @@
 from routes.auth_routes import auth
 from flask import Flask
+from routes.home_routes import home
 from routes.dashboard_routes import dashboard
 from utils.time_helpers import time_since
 from datetime import timedelta
 from routes.skillfund_routes import skillfund
 from routes.project_routes import project
+
+
 
 
 
@@ -21,6 +24,7 @@ app.permanent_session_lifetime =  timedelta(days=1)  # Set session timeout to 30
 
 app.register_blueprint(dashboard)
 app.register_blueprint(auth)
+app.register_blueprint(home)
 app.register_blueprint(skillfund)
 app.register_blueprint(project)
 
