@@ -85,3 +85,35 @@ const slider = document.getElementById("ratingSlider");
             output.textContent = slider.value + " +";
         });
     }
+
+
+
+
+
+
+const countdownElem = document.getElementById("lockoutCountdown");
+
+if (countdownElem) {
+    let remaining = parseInt(countdownElem.textContent);
+    const loginBtn = document.querySelector(".auth-btn");
+
+    if (loginBtn) loginBtn.disabled = true;
+
+    const interval = setInterval(() => {
+        remaining--;
+        countdownElem.textContent = remaining;
+
+        if (remaining <= 0) {
+            clearInterval(interval);
+
+            if (loginBtn) loginBtn.disabled = false;
+
+            countdownElem.parentElement.textContent =
+                "You can try logging in again. Reloading…";
+
+            setTimeout(() => {
+                window.location.href = "/login";
+            }, 1000);
+        }
+    }, 1000);
+}
