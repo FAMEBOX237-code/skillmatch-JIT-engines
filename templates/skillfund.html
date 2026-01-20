@@ -3,29 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skillfund</title>
-    <link rel="stylesheet" href="..//static/css/global.css">
+    <title>SkillFund • SkillMatch+</title>
+    <link rel="stylesheet" href="../static/css/global.css">
     <link rel="stylesheet" href="../static/css/header-footer.css">
     <link rel="stylesheet" href="../static/css/skillfund.css">
     <link rel="stylesheet" href="../static/css/modals.css">
-    <link rel="stylesheet" href="..//staticcss/messages.css">
+    <link rel="stylesheet" href="../static/css/messages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-     <!-- GLOBAL MESSAGE BOX -->
+    <!-- GLOBAL MESSAGE BOX -->
 <div class="app-message" id="appMessage">
     <span class="message-icon"></span>
     <span class="message-text"></span>
 </div>
- 
-     <!-- LOGGED-IN HEADER -->
+
+
+    <!-- LOGGED-IN HEADER -->
     <header class="main-header">
         <div class="container">
-            <div class="logo"><h2>SkillMatch+</h2></div>
+            <div class="logo"><h2><i class="fas fa-seedling"></i>SkillMatch+</h2></div>
             <nav class="main-nav">
-                <a href="dashboard.html">Dashboard</a>
                 <a href="skillfund.html" class="active">SkillFund</a>
+                <a href="/dashboard">Dashboard</a>
                 
             </nav>
             <div class="header-right">
@@ -43,30 +44,51 @@
             </div>
         </div>
     </header>
+{% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-containers">
+          {% for category, message in messages %}
+            <div class="flash-messages {{ category }}">
+                {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
 
 
-     <!-- FILTER & SEARCH BAR -->
+    <!-- FILTER & SEARCH BAR -->
     <section class="skillfund-filters">
         <div class="container">
             <div class="filters-container">
                 <div class="search-section">
                     <button class="hero-cta" data-open-modal="postIdeaModal">
-                    Post Your Idea
+                        <i class="fas fa-rocket"></i> Post Your Idea
                     </button>
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search innovative projects..." class="search-input">
-                        <button class="search-btn">Search</button>
-                    </div>
+                   <form method="GET" action="/skillfund" class="search-bar">
+                    <i class="fas fa-search"></i>
+
+                    <input
+                            type="text"
+                            name="q"
+                            class="search-input"
+                            placeholder="Search innovative projects..."
+                            value="{{ search_query or '' }}"
+                                                        >
+                  <button type="submit" class="search-btn">Search</button>
+                 </form>
+
+                    
                 </div>
+                
+                
             </div>
         </div>
     </section>
 
-  <!-- PROJECTS GRID - VISUAL CARDS -->
-  <section class="projects-grid-section">
-    <div>
-         <div class="section-header">
+    <!-- PROJECTS GRID - VISUAL CARDS -->
+    <section class="projects-grid-section">
+            <div class="section-header">
                 <h2>Featured <span class="highlight">Innovations</span></h2>
                 <div class="sort-options">
                 <button class="filter-toggle" data-open-modal="filterModal">
@@ -75,215 +97,75 @@
 
                 </div>
             </div>
-    <div class="projects-grid">
+            
+        <div class="projects-grid">
 
-             <!-- PROJECT CARD 1 - FEATURED -->
-                <article class="project-card featured">
-                    <div class="project-image">
-                        <img src="../static/images/student.jpg" alt="AI Campus Assistant">
-                        <div class="image-overlay">
-                            <span class="project-category">Technology</span>
-                        </div>
+    {% if projects %}
+        {% for project in projects %}
+        <article class="project-card">
+            <div class="project-image">
+                <img src="../static/images/student-working-together.webp" alt="Project Image">
+                <div class="image-overlay">
+                    <span class="project-category">
+                        {{ project.categories }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="project-content">
+
+                <h3 class="project-title">
+                    {{ project.project_title }}
+                </h3>
+
+                <p class="project-description">
+                    {{ project.project_description }}
+                </p>
+
+                {% if project.required_skills %}
+                <div class="project-skills">
+                    {% for skill in project.required_skills.split(",") %}
+                        <span class="skill-tag">{{ skill.strip() }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="project-funding">
+                    <div class="funding-goal">
+                        <span class="goal-label">Goal:</span>
+                        <span class="goal-amount">
+                            FCFA{{ "{:,}".format(project.funding_goal|int) }}
+                        </span>
                     </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <div class="project-creator">
-                                <img src="../static/images/avatar.png" alt="Creator" class="creator-avatar">
-                                <div>
-                                    <h4>David Chen</h4>
-                                    <p class="creator-title">Computer Science, Year 4</p>
-                                </div>
-                            </div>
-                            <div class="project-rating">
-                                <i class="fas fa-star"></i> 4.9
-                            </div>
-                        </div>
-                        
-                        <h3 class="project-title">AI-Powered Campus Assistant</h3>
-                        <p class="project-description">
-                            An intelligent assistant that helps students with schedules, assignments, and campus navigation using natural language processing.
-                        </p>
-                        
-                        <div class="project-skills">
-                            <span class="skill-tag">Python,Machine Learning</span>
-                        </div>
-                        
-                        <div class="project-funding">
-                            <div class="funding-goal">
-                                <span class="goal-label">Goal:</span>
-                                <span class="goal-amount">500,000xaf</span>
-                            </div>
-                            <div class="funding-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 65%"></div>
-                                </div>
-                                <div class="progress-stats">
-                                    <span class="raised">325,000xaf raised</span>
-                                    <span class="percentage">65%</span>
-                                </div>
-                            </div>
-                            <div class="project-meta">
-                                <div class="meta-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>4 Supporters</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="project-actions">
-                            <button class="btn-support" data-open-modal="supportProjectModal">
-                               Support Project
-                            </button>
+                </div>
 
-                            <button class="btn-details">
-                                <i class="fas fa-info-circle"></i> View Details
-                            </button>
-                        </div>
-                    
-                </article>
+                <div class="project-actions">
+                    <button class="btn-support">
+                        <i class="fas fa-hand-holding-heart"></i> Support Project
+                    </button>
+
+                    <a href="/project/{{ project.id }}" class="btn-details">
+                        <i class="fas fa-info-circle"></i> View Details
+                    </a>
+                </div>
+
+            </div>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p style="text-align:center;">No projects available yet.</p>
+    {% endif %}
+
+</div>
 
             
-                <!-- PROJECT CARD 2 -->
-                <article class="project-card">
-                    <div class="project-image">
-                        <img src="../static/images/solarpanel.jpg" alt="Solar Study Pod">
-                        <div class="image-overlay">
-                            <span class="project-category">Environment</span>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <div class="project-creator">
-                                <img src="../static/images/avatar.png" alt="Creator" class="creator-avatar">
-                                <div>
-                                    <h4>Sarah Johnson</h4>
-                                    <p class="creator-title">Engineering, Year 3</p>
-                                </div>
-                            </div>
-                            <div class="project-rating">
-                                <i class="fas fa-star"></i> 4.7
-                            </div>
-                        </div>
-                        
-                        <h3 class="project-title">Solar-Powered Study Pods</h3>
-                        <p class="project-description">
-                            Sustainable outdoor study spaces powered entirely by solar energy, providing quiet study areas with charging stations.
-                        </p>
-                        
-                        <div class="project-skills">
-                            <span class="skill-tag">Engineering,Solar Energy,Sustainability</span>
-                        </div>
-                        
-                        <div class="project-funding">
-                            <div class="funding-goal">
-                                <span class="goal-label">Goal:</span>
-                                <span class="goal-amount">350,000xaf</span>
-                            </div>
-                            <div class="funding-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 42%"></div>
-                                </div>
-                                <div class="progress-stats">
-                                    <span class="raised">147,000xaf raised</span>
-                                    <span class="percentage">42%</span>
-                                </div>
-                            </div>
-                            <div class="project-meta">
-                                <div class="meta-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>5 Supporters</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="project-actions">
-                            <button class="btn-support" data-open-modal="supportProjectModal">
-                                Support Project
-                            </button>
-
-                            <button class="btn-details">
-                                <i class="fas fa-info-circle"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </article>  
-                
-           
-                <!-- PROJECT CARD 3 -->
-                <article class="project-card">
-                    <div class="project-image">
-                        <img src="../static/images/ecofilterwater.jpg" alt="Eco Water Filter">
-                        <div class="image-overlay">
-                            <span class="project-category">Health</span>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-header">
-                            <div class="project-creator">
-                                <img src="../static/images/avatar.png" alt="Creator" class="creator-avatar">
-                                <div>
-                                    <h4>Marcus Okoro</h4>
-                                    <p class="creator-title">Biochemistry, Year 4</p>
-                                </div>
-                            </div>
-                            <div class="project-rating">
-                                <i class="fas fa-star"></i> 4.8
-                            </div>
-                        </div>
-                        
-                        <h3 class="project-title">Low-Cost Eco Water Filter</h3>
-                        <p class="project-description">
-                            Affordable water filtration system using locally sourced materials for rural communities without access to clean water.
-                        </p>
-                        
-                        <div class="project-skills">
-                            <span class="skill-tag">Chemistry</span>
-                            <span class="skill-tag">Product Design</span>
-                            <span class="skill-tag">Social Impact</span>
-                        </div>
-                        
-                        <div class="project-funding">
-                            <div class="funding-goal">
-                                <span class="goal-label">Goal:</span>
-                                <span class="goal-amount">280,000xaf</span>
-                            </div>
-                            <div class="funding-progress">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 78%"></div>
-                                </div>
-                                <div class="progress-stats">
-                                    <span class="raised">218,400xaf raised</span>
-                                    <span class="percentage">78%</span>
-                                </div>
-                            </div>
-                            <div class="project-meta">
-                                <div class="meta-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>2 Supporters</span>
-                                </div>
-                               </div>
-                        </div>
-                        
-                        <div class="project-actions">
-                            <button class="btn-support" data-open-modal="supportProjectModal">
-                                 Support Project
-                            </button>
-
-                            <button class="btn-details">
-                                <i class="fas fa-info-circle"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </article> 
-            </div>   
             <div class="load-more">
                 <button class="btn-load">
                     <i class="fas fa-sync-alt"></i> Load More Projects
                 </button>
-            </div> 
-    </div>        
-</section>  
-
+            </div>
+        </div>
+    </section>
 
     <!-- HOW IT WORKS SECTION -->
     <section class="how-it-works">
@@ -322,21 +204,23 @@
         </div>
     </section>
 
-  <!-- FOOTER -->
+    
+
+    <!-- FOOTER -->
     <footer class="main-footer">
         <div class="container footer-container">
             <div class="footer-links">
-                <a href="../static/css/about.css">About Us</a>|
+                <a href="/about">About Us</a>|
                 <a href="/contact">Contact</a>|
                 <a href="/terms">Terms</a>|
                 <a href="/privacy">Privacy Policy</a>
             </div>
             <div class="footer-bottom">
-                <p>© 2025 SkillMatch+<span class="separator">|</span> JIT Engines</p>
+                <p>© 2025 SkillFund. All rights reserved.</p>
             </div>
         </div>
     </footer>
-    
+
 
 
    <!-- FILTER MODAL -->
@@ -344,35 +228,22 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2>Filter Projects</h2>
-            
+            <form method="GET" action="/skillfund">
             <div class="form-group">
                 <label>Category</label>
-                <div class="checkbox-grid">
-                    <label>
-                        <input type="checkbox" checked>
-                        All Categories
-                    </label>
-                    <label>
-                        <input type="checkbox">
-                        Technology
-                    </label>
-                    <label>
-                        <input type="checkbox">
-                        Education
-                    </label>
-                    <label>
-                        <input type="checkbox">
-                        Environment
-                    </label>
-                    <label>
-                        <input type="checkbox">
-                        Health
-                    </label>
-                    <label>
-                        <input type="checkbox">
-                        Social Impact
-                    </label>
-                </div>
+                <input type="hidden" name="q" value="{{ search_query or '' }}">
+
+               {% for cat in category %}
+             <label class="filter-option">
+              <input
+                type="checkbox"
+                name="category"
+                value="{{ cat.id }}"
+                {% if cat.id|string in selected_categories %}checked{% endif %}
+            >
+            {{ cat.name }}
+        </label>
+        {% endfor %}
             </div>
             
             <div class="form-group">
@@ -430,12 +301,13 @@
             </div>
             
             <div class="modal-actions">
-                <button class="btn-apply" id="applyFilters">
+                <button class="btn-apply" id="applyFilters" type="submit">
                     Apply Filters
                 </button>
-                <!-- <button class="btn-reset close-modal">
+                <a href="/skillfund" class="btn-cancel">
                     Cancel
-                </button> -->
+                </a>
+            </form>
             </div>
         </div>
     </div>
@@ -454,38 +326,34 @@
             </p>
             
             
-            <form id="createProjectForm">
+            <form id="createProjectForm" action="/create-project" method="POST">
                 <div class="form-group">
                     <label for="projectTitle">Project Title *</label>
-                    <input type="text" id="projectTitle" placeholder="Make it catchy and descriptive" required>
+                    <input type="text" id="projectTitle" name="projectTitle" placeholder="Make it catchy and descriptive" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="projectDescription">Project Description *</label>
-                    <textarea id="projectDescription" rows="4" placeholder="Describe your vision, impact, and what you plan to achieve..." required></textarea>
+                    <textarea id="projectDescription" rows="4" name="projectDescription" placeholder="Describe your vision, impact, and what you plan to achieve..." required></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label for="projectCategory">Category *</label>
-                    <select id="projectCategory" required>
-                        <option value="">Select Category</option>
-                        <option value="technology">Technology</option>
-                        <option value="education">Education</option>
-                        <option value="environment">Environment</option>
-                        <option value="health">Health</option>
-                        <option value="social">Social Impact</option>
-                        <option value="art">Art & Design</option>
+                    <select id="projectCategory" class="category-select" name="category[]" multiple  required>
+                        {% for cat in category %}
+                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label for="fundingGoal">Funding Goal (XAF) *</label>
-                    <input type="number" id="fundingGoal" placeholder="e.g., 500000" min="1000" required>
+                    <label for="fundingGoal">Funding Goal (FCFA) *</label>
+                    <input type="number" id="fundingGoal" name="fundingGoal" placeholder="e.g., 500000" min="1000" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="requiredSkills">Required Skills (Optional)</label>
-                    <input type="text" id="requiredSkills" placeholder="e.g., Python, Electrical Engineering, Marketing">
+                    <input type="text" id="requiredSkills" name="requiredSkills" placeholder="e.g., Python, Electrical Engineering, Marketing">
                 </div>
                 
                 <!-- FILE UPLOAD -->
@@ -506,11 +374,11 @@
                 
                 <div class="modal-actions">
                     <button type="submit" class="btn-submit">
-                        Submit for Review
+                        Submit Project
                     </button>
-                    <!-- <button type="button" class="btn-reset close-modal">
+                    <a href="/skillfund" class="btn-cancel">
                         Cancel
-                    </button> -->
+                    </a>
                 </div>
             </form>
         </div>
@@ -533,7 +401,7 @@
 
         <!-- AMOUNT -->
         <div class="form-group">
-            <label>Support Amount (XAF)</label>
+            <label>Support Amount (FCFA)</label>
             <input type="text" placeholder="e.g. 10000">
         </div>
 
@@ -545,7 +413,7 @@
 
         <!-- PAYMENT NOTE -->
         <p class="modal-info">
-            This is a demo project. No real payment will be processed.
+            ⚠ This is a demo project. No real payment will be processed.
         </p>
 
         <!-- ACTIONS -->
@@ -561,7 +429,5 @@
 
 <script src="../static/js/modals.js"></script>
     
-
-
 </body>
 </html>

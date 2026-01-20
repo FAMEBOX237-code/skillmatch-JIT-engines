@@ -6,6 +6,7 @@
     <title>Dashboard • SkillMatch+</title>
     <link rel="stylesheet" href="../static/css/global.css">
     <link rel="stylesheet" href="../static/css/header-footer.css">
+    <link rel="stylesheet" href="../static/css/messages.css">
     <link rel="stylesheet" href="../static/css/dashboard.css"> 
     <link rel="stylesheet" href="../static/css/modals.css"> 
     <link rel="stylesheet" href="../static/css/messages.css">
@@ -43,7 +44,6 @@
         </div>
     </header>
 
-
 {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flash-containers">
@@ -55,9 +55,6 @@
         </div>
       {% endif %}
     {% endwith %}
-
-
-
 
 
 <!-- DASHBOARD WELCOME HERO -->
@@ -90,13 +87,10 @@
                     </div>
                     <div class="stat">
                         <h3>{{ my_posts }}</h3>
-                        <p>My Posts</p>
+                        <p>my personal<br> Posts</p>
                     </div>
                 </div>
             </div>
-
-           
-    
     </div>
     <div class="wave-divider"></div>
 </section>
@@ -157,28 +151,30 @@
                     </form>
                 </div>
 
-               {% for post in posts %}
+                <!-- POST CARD 1 – REQUEST -->
+                {% for post in posts %}
                 <article class="post-card {{ post.post_type }}">
 
                     <div class="post-header">
                         <img src="{{ post.profile_picture or '/static/images/avatar.png' }}" 
-                             class="user-avatar">
+                            class="user-avatar">
 
                         <div class="user-info">
                             <h4>
                                 {{ post.full_name }}
                                 <span class="post-time">
-                                     {{ post.created_at | time_since }} 
+                                    {{ post.created_at| time_since }}
                                 </span>
                             </h4>
                             <div class="rating">
-                                  <i class="fas fa-star"></i> 4.9
+                    <i class="fas fa-star"></i> 4.9
                             </div>
                         </div>
 
-                        <span class="post-type {{ post.post_type }}">
-                            {{ post.post_type|capitalize }}
-                        </span>
+                    <span class="post-type {{ post.post_type }}">
+                    {{ post.post_type |capitalize }} 
+                            
+                    </span>
                     </div>
 
                     <div class="post-content">
@@ -195,17 +191,24 @@
                     <div class="post-footer">
                         <form action="/posts/{{ post.id }}/interest" method="POST">
                         <button class="btn-interested">
-                              <i class="fas fa-check"></i> I'm Interested
+                <i class="fas fa-check"></i> I'm Interested
                         </button>
-                        </form>
+                    </form>
+
                         <button class="btn-message">
-                              <i class="fas fa-comment"></i> Message
+                    <i class="fas fa-comment"></i> Message
                         </button>
 
                         <button class="btn-report" data-open-modal="reportPostModal">
-                              <i class="fas fa-flag"></i>
+                    <i class="fas fa-flag"></i>
                         </button>
                     </div>
+
+                </article>
+                {% else %}
+                <p>No posts yet. Be the first to create one!</p>
+                {% endfor %}
+                
 
                 </article>
                 {% else %}
@@ -217,7 +220,7 @@
 
             <!-- FILTERS SIDEBAR (RIGHT SIDE) -->
 <aside class="filters-sidebar">
-    <form action="/dashboard" method="GET"> 
+    <form action="/dashboard" method="GET">
     <div class="filters-card">
         <h3 class="filters-title">
             <i class="fas fa-sliders-h"></i> Filter Feed
@@ -226,7 +229,7 @@
         <!-- Search Bar -->
         <div class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search posts, skills, users..." name="search" value="{{request.args.get('search','')}}" class="search-input">
+            <input type="text" placeholder="Search posts, skills, users..." name="search" value="{{ request.args.get('search','')}}" class="search-input">
         </div>
 
         <!-- Post Type Filter -->
@@ -236,14 +239,14 @@
                 <input type="checkbox" name="type" value="request" {% if request.args.get('type') == 'request' %}checked{% endif %}> <span class="type request">Requests</span>
             </label>
             <label class="filter-option">
-                <input type="checkbox" name="type" value="offer"  {% if request.args.get('type') == 'offer' %}checked{% endif %}> <span class="type offer">Offers</span>
+                <input type="checkbox" name="type" value="offer" {% if request.args.get('type') == 'offer' %}checked{% endif %}> <span class="type offer">Offers</span>
             </label>
         </div>
 
         <!-- Skill Categories -->
         <div class="filter-group">
             <h4>Skill Categories</h4>
-                <select class="skills-select" name="skills" multiple size="6">
+            <select class="skills-select" name="skills" multiple size="6">
                 {% for skill in skills%}
                     <option value="{{skill.id}}" 
                     {% if skill.id|string in selected_skills %}selected{% endif%}>
@@ -251,6 +254,8 @@
                     </option>
                 {% endfor %}
                 </select>
+                
+                
         </div>
 
         <!-- Availability / Level -->
@@ -293,9 +298,8 @@
 
         <!-- Apply / Reset -->
         <div class="filter-actions">
-            <button type="submit" class="btn-apply">Apply Filters</button>
+            <button type="submit"class="btn-apply">Apply Filters</button>
             <a href="/dashboard" class="btn-reset">Reset All</a>
-            
         </div>
     </div>
     </form>
@@ -338,8 +342,8 @@
             <div class="form-group">
                 <label>Post Type:</label>
                 <div class="radio-group">
-                    <label><input type="radio" name="postType" value="offer" checked> Offer a Skill</label>
-                    <label><input type="radio" name="postType" value="request"> Request Help</label>
+                    <label><input type="radio" name="post_type" value="offer" checked> Offer a Skill</label>
+                    <label><input type="radio" name="post_type" value="request"> Request Help</label>
                 </div>
             </div>
             <div class="form-group">
@@ -348,18 +352,17 @@
             </div>
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" placeholder="Briefly describe what you offer or need help with." required></textarea>
+                <textarea id="description" name = "description" placeholder="Briefly describe what you offer or need help with." required></textarea>
             </div>
             <div class="form-group">
                 <label for="category">Skill Category:</label>
-                 <select class="skills-select" name="skills[]" multiple required>
+            <select class="skills-select" name="skills[]" multiple required>
                 {% for skill in skills%}
                     <option value="{{skill.id}}">
-                   {{ skill.name }}
+                        {{ skill.name }}
                     </option>
                 {% endfor %}
                 </select>
-            </div>
             <div class="modal-actions">
                 <button type="submit" class="btn-apply">Submit Post</button>
                 <!-- <button type="button" class="btn-reset close-modal">Cancel</button> -->

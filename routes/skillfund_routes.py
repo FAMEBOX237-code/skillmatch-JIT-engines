@@ -1,78 +1,76 @@
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from database import get_db_connection
+from utils.auth_utils import login_required
 import pymysql
+
 
 skillfund = Blueprint("skillfund", __name__)
 
 @skillfund.route("/skillfund")
+@login_required(role="student")
 def skillfund_home():
     connection = get_db_connection()
     cursor = connection.cursor(pymysql.cursors.DictCursor)
 
-    try:
-        # Fetch categories for filters & form
-        cursor.execute("SELECT id, name FROM category ORDER BY name")
-        categories = cursor.fetchall()
+    # Fetch categories for filters & form
+    cursor.execute("SELECT id, name FROM category ORDER BY name")
+    categories = cursor.fetchall()
 
-        # Read filters
-        selected_categories = request.args.getlist("category")
-        sort = request.args.get("sort", "newest")
-        search_query = request.args.get("q", "").strip()  
+    # Read filters
+    selected_categories = request.args.getlist("category")
+    sort = request.args.get("sort", "newest")
+    search_query = request.args.get("q", "").strip()
 
-        # Base query (using LEFT JOIN to include projects without categories)
-        query = """
-            SELECT
-                p.id,
-                p.project_title,
-                p.project_description,
-                p.funding_goal,
-                p.required_skills,
-                GROUP_CONCAT(DISTINCT c.name SEPARATOR ', ') AS categories
-            FROM project p
-            LEFT JOIN project_category pc ON p.id = pc.project_id
-            LEFT JOIN category c ON pc.category_id = c.id
-        """
+    # Base query
+    query = """
+        SELECT 
+            p.id,
+            p.project_title,
+            p.project_description,
+            p.funding_goal,
+            p.required_skills,
+            GROUP_CONCAT(c.name SEPARATOR ', ') AS categories
+        FROM project p
+        JOIN project_category pc ON p.id = pc.project_id
+        JOIN category c ON pc.category_id = c.id
+    """
 
-        conditions = []
-        params = []
+    conditions = []
+    params = []
 
-        #  Search filter
-        if search_query:
-            conditions.append(
-                "(p.project_title LIKE %s OR p.project_description LIKE %s OR p.required_skills LIKE %s)"
-            )
-            like_value = f"%{search_query}%"
-            params.extend([like_value, like_value, like_value])
+    #  Search filter
+    if search_query:
+        conditions.append(
+            "(p.project_title LIKE %s OR p.project_description LIKE %s OR p.required_skills LIKE %s)"
+        )
+        like_value = f"%{search_query}%"
+        params.extend([like_value, like_value, like_value])
 
-        #  Category filter
-        if selected_categories:
-            placeholders = ",".join(["%s"] * len(selected_categories))
-            conditions.append(f"c.id IN ({placeholders})")
-            params.extend(selected_categories)
+    #  Category filter
+    if selected_categories:
+        placeholders = ",".join(["%s"] * len(selected_categories))
+        conditions.append(f"c.id IN ({placeholders})")
+        params.extend(selected_categories)
 
-        if conditions:
-            query += " WHERE " + " AND ".join(conditions)
+    if conditions:
+        query += " WHERE " + " AND ".join(conditions)
 
-        query += " GROUP BY p.id"
+    query += " GROUP BY p.id"
 
-        #  Sorting
-        if sort == "title":
-            query += " ORDER BY p.project_title ASC"
-        elif sort == "funding":
-            query += " ORDER BY p.funding_goal DESC"
-        else:
-            query += " ORDER BY p.id DESC"
+    #  Sorting
+    if sort == "title":
+        query += " ORDER BY p.project_title ASC"
+    elif sort == "funding":
+        query += " ORDER BY p.funding_goal DESC"
+    else:
+        query += " ORDER BY p.id DESC"
 
-        cursor.execute(query, params)
-        projects = cursor.fetchall()
+    cursor.execute(query, params)
+    projects = cursor.fetchall()
 
-        cursor.close()
-        connection.close()
-
-    except Exception as e:
-        print(f"Database error: {e}")
-        projects = []
-        categories = []
+    cursor.close()
+    connection.close()
 
     return render_template(
         "skillfund.html",
