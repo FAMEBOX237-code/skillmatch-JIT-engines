@@ -12,7 +12,7 @@ dashboard = Blueprint("dashboard", __name__)
 
 # route to dashboard_home
 @dashboard.route("/dashboard")
-@login_required(role="student")
+@login_required(role=["student"])
 def dashboard_home():
 
     db = get_db_connection()

@@ -4,8 +4,8 @@ from flask import session, redirect, url_for, flash
 def login_required(role=None):
     """
     role: None -> allow all logged-in users
-          str -> allow one role
-          list/tuple -> allow multiple roles
+    str -> allow one role
+    list/tuple -> allow multiple roles
     """
     def decorator(f):
         @wraps(f)
