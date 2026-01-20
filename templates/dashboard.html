@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/css/messages.css">
     <link rel="stylesheet" href="../static/css/dashboard.css"> 
     <link rel="stylesheet" href="../static/css/modals.css"> 
+    <link rel="stylesheet" href="../static/css/messages.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -74,7 +75,7 @@
                         <i class="fas fa-plus"></i> Create New Post
                     </button>
 
-                    <a href="skillfund.html" class="btn-secondary">
+                    <a href="/skillfund" class="btn-secondary">
                         <i class="fas fa-lightbulb"></i> Post a SkillFund Idea
                     </a>
                 </div>
@@ -107,11 +108,47 @@
             <div class="posts-feed">
                 <div class="feed-header">
                     <h2>Post Feeds</h2>
-                    <select class="sort-select">
-                        <option>Most Recent</option>
-                        <option>Highest Rated</option>
-                        <option>Most Active</option>
-                    </select>
+                    <form method="GET" action="/dashboard">
+                        <!-- Preserve existing filters -->
+                        <input type="hidden" name="search" value="{{ request.args.get('search', '') }}">
+
+                        {% for skill_id in selected_skills %}
+                            <input type="hidden" name="skills" value="{{ skill_id }}">
+                        {% endfor %}
+
+                        {% if request.args.get('type') %}
+                            <input type="hidden" name="type" value="{{ request.args.get('type') }}">
+                        {% endif %}
+
+                        {% if request.args.get('min_rating') %}
+                            <input type="hidden" name="min_rating" value="{{ request.args.get('min_rating') }}">
+                        {% endif %}
+
+                        <!-- SORT SELECT -->
+                        <select
+                            class="sort-select"
+                            name="sort"
+                            onchange="this.form.submit()"
+                        >
+                            <option value="recent"
+                                {% if request.args.get('sort', 'recent') == 'recent' %}selected{% endif %}
+                            >
+                                Most Recent
+                            </option>
+
+                            <option value="rating_desc"
+                                {% if request.args.get('sort') == 'rating_desc' %}selected{% endif %}
+                            >
+                                Highest Rated
+                            </option>
+
+                            <option value="rating_asc"
+                                {% if request.args.get('sort') == 'rating_asc' %}selected{% endif %}
+                            >
+                                Lowest Rated
+                            </option>
+                        </select>
+                    </form>
                 </div>
 
                 <!-- POST CARD 1 – REQUEST -->
@@ -173,6 +210,11 @@
                 {% endfor %}
                 
 
+                </article>
+                {% else %}
+                <p>No posts yet. Be the first to create one!</p>
+                {% endfor %}
+                            
                 <!-- More posts will go here -->
             </div>
 
@@ -231,13 +273,28 @@
         </div>
 
         <!-- Rating Filter -->
+         <!-- Rating Filter -->
         <div class="filter-group">
-            <h4>Minimum Rating</h4>
-            <div class="rating-filter">
-                <input type="range" min="0" max="5" step="0.5" value="4" class="rating-slider">
-                <span class="rating-value">4.0 +</span>
-            </div>
+    <h4>Minimum Rating</h4>
+
+    <div class="rating-filter">
+            <input
+                type="range"
+                name="min_rating"
+                min="0"
+                max="5"
+                step="0.5"
+                value="{{ request.args.get('min_rating', 0) }}"
+                class="rating-slider"
+                id="ratingSlider"
+            >
+
+            <span class="rating-value" id="ratingValue">
+                {{ request.args.get('min_rating', 0) }} +
+            </span>
         </div>
+    </div>
+
 
         <!-- Apply / Reset -->
         <div class="filter-actions">
