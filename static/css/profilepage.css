@@ -1,4 +1,5 @@
 
+
 /* ================================
    PROFILE TOP SECTION
    ================================ */
@@ -321,4 +322,309 @@ body {
 
 .task-card::-webkit-scrollbar-thumb:hover {
     background: #0f4379;
+}
+
+
+/* ===== MY POSTS SECTION ===== */
+.posts-section {
+    margin: 40px auto;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+
+
+.post-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+}
+
+.post-item:hover {
+    background-color: #f8f9fa;
+}
+
+.post-item:last-child {
+    border-bottom: none;
+}
+
+.post-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.post-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.interested-count {
+    font-size: 14px;
+    color: #27ae60; /* Green to highlight interest */
+    font-weight: 600;
+}
+
+/* Button inside post item */
+.post-item .btn-primary {
+    min-width: 140px;
+    padding: 10px 16px;
+    font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .post-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 20px;
+    }
+
+    .post-item .btn-primary {
+        align-self: flex-end;
+    }
+}
+
+/* ===== INTERESTS MODAL STYLES ===== */
+.interested-list {
+    margin: 20px 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.interested-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.interested-user:last-child {
+    border-bottom: none;
+}
+
+.interested-user .small-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.interested-user .user-name {
+    font-weight: 600;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.interested-user .user-rating {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 4px 0 0 0;
+}
+
+#modal-post-title {
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* Updated styles for interested users with Accept button */
+.interested-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* Pushes button to the right */
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.user-details {
+    flex: 1; /* Takes available space */
+}
+
+.interested-user .accept-collaboration-btn {
+    min-width: 100px;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+/* Optional: Change button color on hover or when accepted */
+.accept-collaboration-btn.accepted {
+    background-color: #27ae60; /* Green */
+    pointer-events: none; /* Disable further clicks */
+}
+
+/* Responsive: Stack vertically on mobile */
+@media (max-width: 768px) {
+    .interested-user {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .interested-user .accept-collaboration-btn {
+        align-self: flex-end;
+    }
+}
+
+
+.post-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.post-status {
+    font-weight: 500;
+    color: #2980b9;
+}
+
+/* Accepted collaborator */
+.interested-user.accepted {
+    background-color: #f0fff4;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.accepted-badge {
+    background-color: #27ae60;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Pending hover feedback */
+.interested-user.pending:hover {
+    background-color: #f8f9fa;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.page-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.page-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.interests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.interest-card {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.interest-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.interest-info {
+    flex: 1;
+}
+
+.interest-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.rating {
+    color: #777;
+    font-size: 14px;
+}
+
+.interest-action {
+    text-align: right;
+}
+
+.status.accepted {
+    background: #e6f4ea;
+    color: #1e7f43;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.empty-state {
+    text-align: center;
+    color: #777;
+    margin-top: 50px;
+}
+
+
+
+
+
+
+
+.task-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.task-left {
+    flex: 1;
+}
+
+.task-right {
+    text-align: right;
+}
+
+.task-meta {
+    font-size: 14px;
+    color: #555;
+}
+
+.task-sub {
+    color: #c47a00;
+    font-weight: 500;
+}
+
+.rating {
+    color: #f59e0b;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
