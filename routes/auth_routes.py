@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, redirect, session, url_fo
 from database import get_db_connection
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
+from utils.login_limiter import limiter
+
 auth = Blueprint("auth", __name__)
 
 
@@ -44,8 +46,11 @@ def register():
     return render_template("register.html")
         
 @auth.route("/login", methods = ["GET", "POST"])
+
+@limiter.limit("5 per 30 seconds", error_message="Too many login attempts. Please try again later.")
     
 def login():
+    lockout_seconds = request.args.get("lockout_seconds", type=int)
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -77,7 +82,7 @@ def login():
         
         
 
-    return render_template("login.html")
+    return render_template("login.html", lockout_seconds=lockout_seconds)
 @auth.route("/verify-email", methods = ["POST"])
 def verify_email():
     email = request.form["email"]

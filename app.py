@@ -5,20 +5,17 @@ from utils.time_helpers import time_since
 from datetime import timedelta
 from routes.skillfund_routes import skillfund
 from routes.project_routes import project
-
-
+from utils.login_limiter import limiter
+from utils.error_handlers import register_error_handlers
 
 app = Flask(__name__)
 app.secret_key="skillmatch_secret_key"
 app.jinja_env.filters['time_since'] = time_since
 
-
-
-
 app.permanent_session_lifetime =  timedelta(days=1)  # Set session timeout to 30 minutes
 
-
-
+limiter.init_app(app)
+register_error_handlers(app)
 app.register_blueprint(dashboard)
 app.register_blueprint(auth)
 app.register_blueprint(skillfund)
