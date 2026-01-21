@@ -1,4 +1,4 @@
-import email
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, request
 from database import get_db_connection
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -23,12 +23,12 @@ def register():
             flash("Password do not match.", "error")
             return redirect(url_for("auth.register"))
 
-        is_valid_email = validate_email(email)
+        is_valid_email, email = validate_email(email)
         if not is_valid_email:
             flash(email, "error")
             return redirect(url_for("auth.register"))
 
-        is_valid_password = validate_password(raw_password)
+        is_valid_password, raw_password = validate_password(raw_password)
         if not is_valid_password:
             flash(raw_password, "error")
             return redirect(url_for("auth.register"))   
@@ -39,6 +39,13 @@ def register():
 
         connection = get_db_connection()
         cursor = connection.cursor()
+
+
+        
+        cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
+        if cursor.fetchone():
+            flash("This email is already registered. Please login.", "error")
+            return redirect(url_for("auth.register"))
 
 
         sql = """
