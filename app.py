@@ -10,7 +10,9 @@ from routes.skillfund_routes import skillfund
 from routes.project_routes import project
 from utils.login_limiter import limiter
 from utils.error_handlers import register_error_handlers
-
+from utils.login_error_handler import handle_login_error
+from utils.error_handler import init_error_handling
+from utils.validator import validate_email, validate_password
 
 
 app = Flask(__name__)
@@ -28,7 +30,7 @@ app.register_blueprint(skillfund)
 app.register_blueprint(project)
 app.register_blueprint(post)
 app.register_blueprint(profile)
-
+init_error_handling(app)
 
 
 

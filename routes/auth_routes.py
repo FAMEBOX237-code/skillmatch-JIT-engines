@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from database import get_db_connection
 from werkzeug.security import generate_password_hash, check_password_hash
 from utils.login_limiter import limiter
+from utils.validator import validate_email, validate_password
 import pymysql
 auth = Blueprint("auth", __name__)
 
@@ -18,10 +19,21 @@ def register():
         role = request.form["role"]
 
 
-
         if raw_password != confirm_password:
             flash("Password do not match.", "error")
             return redirect(url_for("auth.register"))
+
+        is_valid_email = validate_email(email)
+        if not is_valid_email:
+            flash(email, "error")
+            return redirect(url_for("auth.register"))
+
+        is_valid_password = validate_password(raw_password)
+        if not is_valid_password:
+            flash(raw_password, "error")
+            return redirect(url_for("auth.register"))   
+        
+        
 
         password_hash = generate_password_hash(raw_password)
 
