@@ -45,39 +45,64 @@
     </header>
     <!-- Edit profile Page Starts-->
     <section>
-     <div class="over-all-container">
-       <div class="edit-container"> 
-           <img src="../static/images/avatar.png" alt="Change Profile picture" class="profile-avatar">
-           <div class="edit-actions"> 
-            <button class="btnedit-primary">Upload New Image</button>
-           </div>
-           
-           <div class="information-container">
-             <form action="">
-             <LAbel for="Name"></LAbel> 
-             <input type = "Name" placeholder="Full Name" id="Name">
-              </form>
-           </div>
-            <div class="information-container">
-             <form action="">
-             <LAbel for="Bio"></LAbel> 
-             <input type = "Bio" placeholder="Bio" id="Bio">
-              </form>
-           </div>
-           <div class="information-container">
-             <form action="">
-             <LAbel for="Skills"></LAbel> 
-             <input type = "Skills" placeholder="Skills" id="Skills">
-              </form>
-           </div>
-     </div>
-     </div>
-        <div class="decision-container">
-            <button class="decision-button">Save Changes</button>
-            <button class="decision-button">Cancel</button>
+  <div class="over-all-container">
+
+    <form method="POST" action="{{ url_for('profile.edit_profile') }}" enctype="multipart/form-data">
+
+
+      <div class="edit-container">
+
+       <img src="{{ url_for('static', filename='images/' + (user.profile_picture or 'avatar.png')) }}"
+     class="profile-avatar" alt="Profile Picture">
+
+
+        <div class="edit-actions">
+        <input type="file" name="profile_picture" accept="image/*" class="btnedit-primary">
         </div>
 
-    </section>
+
+        <div class="information-container">
+          <label for="full_name"></label>
+          <input type="text"
+                 id="full_name"
+                 name="full_name"
+                 value="{{ user.full_name }}"
+                 placeholder="Full Name"
+                 required>
+        </div>
+
+        <div class="information-container">
+          <label for="bio"></label>
+          <input type="text"
+                 id="bio"
+                 name="bio"
+                 value="{{ user.bio }}"
+                 placeholder="Bio">
+        </div>
+
+        <div class="information-container">
+          <label for="skills"></label>
+          <input type="text"
+                 id="skills"
+                 name="skills"
+                 value="{{ user.skills }}"
+                 placeholder="Skills (comma separated)">
+        </div>
+
+      </div>
+
+      <div class="decision-container">
+        <button type="submit" class="decision-button">Save Changes</button>
+        <a href="{{ url_for('profile.profile_page') }}" class="decision-button">
+          Cancel
+        </a>
+      </div>
+
+    </form>
+
+  </div>
+</section>
+
    <!-- ======= FOOTER START ======= -->
 <footer class="main-footer">
     <div class="container footer-container">

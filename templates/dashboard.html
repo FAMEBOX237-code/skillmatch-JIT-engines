@@ -30,7 +30,9 @@
                     <span class="badge">3</span>
                 </div>
                 <div class="profile-dropdown" tabindex="0">
-                    <img src="../static/images/avatar.png" alt="Profile" class="profile-pic">
+                   <img src="{{ url_for('static', filename='images/' + (current_user.profile_picture or 'avatar.png')) }}" 
+                      alt="Profile" class="profile-pic">
+
                     <i class="fas fa-caret-down"></i>
                     <div class="dropdown-menu">
                         <a href="/profile">My Profile</a>
@@ -173,7 +175,7 @@
                 <article class="post-card {{ post.post_type }}">
 
                     <div class="post-header">
-                        <img src="{{ post.profile_picture or '/static/images/avatar.png' }}" 
+                        <img src="{{ url_for('static', filename='images/' + (post.profile_picture or 'avatar.png')) }}"
                              class="user-avatar">
 
                         <div class="user-info">
