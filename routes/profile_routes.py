@@ -3,15 +3,23 @@ from database import get_db_connection
 import pymysql
 from utils.auth_utils import login_required
 from flask import jsonify
+import time
+from werkzeug.utils import secure_filename
+import os
 
+UPLOAD_FOLDER = "static/images"
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 profile = Blueprint("profile", __name__)
 
 
 
 @profile.route("/profile")
-@login_required(role=["student", "sponsor" ])
+@login_required(role=["student", "sponsor"])
 def profile_page():
 
     db = get_db_connection()
@@ -19,14 +27,27 @@ def profile_page():
 
 
     # Fetch logged-in user info
+    # Fetch logged-in user info (with bio and profile_picture)
     cursor.execute("""
-        SELECT id, full_name, role
-        FROM users
-        WHERE id = %s
+    SELECT id, full_name, role, bio, profile_picture
+    FROM users
+    WHERE id = %s
     """, (session["user_id"],))
     user = cursor.fetchone()
 
 
+    cursor.execute("""
+    SELECT s.name
+    FROM skills s
+    JOIN user_skills us ON s.id = us.skill_id
+    WHERE us.user_id = %s
+    """, (session["user_id"],))
+    skills = cursor.fetchall()
+
+    user["skills"] = ", ".join(skill["name"] for skill in skills)
+
+
+    
 
 
     # Fetch accumulated rating for logged-in user
@@ -178,7 +199,7 @@ def profile_page():
         db.close()
 
     return render_template(
-        "profilepage.html",
+        "profile.html",
         user=user,
         avg_rating=avg_rating,
         review_count=review_count,
@@ -466,4 +487,91 @@ def rate_task(task_id):
     db.close()
 
     flash("Task completed and rated successfully.", "success")
+    return redirect(url_for("profile.profile_page"))
+
+@profile.route("/profile/edit", methods=["GET", "POST"])
+@login_required(role=["student", "sponsor"])
+def edit_profile():
+
+    db = get_db_connection()
+    cursor = db.cursor(pymysql.cursors.DictCursor)
+
+    user_id = session["user_id"]
+
+    # ===== GET → SHOW FORM =====
+    if request.method == "GET":
+        cursor.execute("""
+            SELECT full_name, bio, profile_picture
+            FROM users
+            WHERE id = %s
+        """, (user_id,))
+        user = cursor.fetchone()
+
+        # Fetch user skills
+        cursor.execute("""
+            SELECT s.name
+            FROM skills s
+            JOIN user_skills us ON s.id = us.skill_id
+            WHERE us.user_id = %s
+        """, (user_id,))
+        skills = cursor.fetchall()
+        skill_string = ", ".join(skill["name"] for skill in skills)
+        cursor.close()
+        db.close()
+
+        user["skills"] = skill_string
+        return render_template("Editprofilepage.html", user=user)
+
+    full_name = request.form.get("full_name")
+    bio = request.form.get("bio")
+    skills_input = request.form.get("skills")
+
+    # Handle uploaded file
+    file = request.files.get("profile_picture")
+    profile_picture_filename = None
+
+    if file and file.filename != "" and allowed_file(file.filename):
+        filename = f"user_{user_id}_{int(time.time())}.{file.filename.rsplit('.', 1)[1]}"
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(filepath)
+        profile_picture_filename = filename
+
+    # Update users table
+    if profile_picture_filename:
+        cursor.execute("""
+            UPDATE users
+            SET full_name = %s, bio = %s, profile_picture = %s
+            WHERE id = %s
+        """, (full_name, bio, profile_picture_filename, user_id))
+    else:
+        cursor.execute("""
+            UPDATE users
+            SET full_name = %s, bio = %s
+            WHERE id = %s
+        """, (full_name, bio, user_id))
+
+    # ===== Update skills =====
+    cursor.execute("DELETE FROM user_skills WHERE user_id = %s", (user_id,))
+    skills = [s.strip().lower() for s in skills_input.split(",") if s.strip()]
+
+    for skill in skills:
+        # Check if skill exists
+        cursor.execute("SELECT id FROM skills WHERE name = %s", (skill,))
+        skill_row = cursor.fetchone()
+        if not skill_row:
+            cursor.execute("INSERT INTO skills (name) VALUES (%s)", (skill,))
+            skill_id = cursor.lastrowid
+        else:
+            skill_id = skill_row["id"]
+
+        cursor.execute("""
+            INSERT INTO user_skills (user_id, skill_id)
+            VALUES (%s, %s)
+        """, (user_id, skill_id))
+
+    db.commit()
+    cursor.close()
+    db.close()
+
+    flash("Profile updated successfully.", "success")
     return redirect(url_for("profile.profile_page"))
