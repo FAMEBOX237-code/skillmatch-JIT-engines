@@ -236,11 +236,8 @@ def express_interest(post_id):
 
 
 
-# route to skillfund_dashboard
-@dashboard.route("/skillfund")
-@login_required(role="sponsor")
-def skillfund_dashboard():
-    return render_template("skillfund.html")
+
+
 
 
 
