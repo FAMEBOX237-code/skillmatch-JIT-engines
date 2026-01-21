@@ -2,22 +2,22 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from database import get_db_connection
 import pymysql
 import os
+from utils.auth_utils import login_required
 from werkzeug.utils import secure_filename
 
 
 project = Blueprint("project",__name__)
 
 @project.route("/create-project", methods=["POST"])
+@login_required(role="student")
 def create_project():
-    if "user_id" not in session:
-        flash("Please login to create a project.", "error")
-        return redirect(url_for("auth.login"))
-    user_id = session["user_id"]
+    
+    # user_id = session["user_id"]
     project_title = request.form.get("projectTitle")
     project_description = request.form.get("projectDescription")
     funding_goal = request.form.get("fundingGoal")
     required_skills = request.form.get("requiredSkills")
-    profile_picture = request.form.get("profilePicture")
+    # profile_picture = request.form.get("profilePicture")
     category = request.form.getlist("category[]")
 
     image_file = request.files.get("projectImage")
