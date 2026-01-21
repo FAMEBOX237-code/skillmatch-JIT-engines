@@ -32,11 +32,12 @@
             <div class="header-right">
                 <div class="notification"><i class="fas fa-bell"></i><span class="badge">3</span></div>
                 <div class="profile-dropdown" tabindex="0">
-                    <img src="../static/images/avatar.png" alt="Profile" class="profile-pic">
+                    <img src="{{ url_for('static', filename='images/' + (current_user.profile_picture or 'avatar.png')) }}" alt="Profile" class="profile-pic">
                     <i class="fas fa-caret-down"></i>
                     <div class="dropdown-menu">
+                        <i class="fas fa-caret-down"></i>
                         <a href="/profile">My Profile</a>
-                        <a href="/about">About Us</a>
+                        <a href="/about_us">About Us</a>
                         <a href="/settings">Settings</a>
                         <a href="/logout">Logout</a>
                     </div>
@@ -104,13 +105,19 @@
         {% for project in projects %}
         <article class="project-card">
             <div class="project-image">
-                <img src="../static/images/student-working-together.webp" alt="Project Image">
-                <div class="image-overlay">
-                    <span class="project-category">
-                        {{ project.categories }}
-                    </span>
-                </div>
-            </div>
+    {% if project.image %}
+    <img src="{{ url_for('static', filename='uploads/projects/' + project.image) }}" alt="Project Image">
+{% else %}
+    <img src="{{ url_for('static', filename='images/student-working-together.webp') }}" alt="Project Image">
+{% endif %}
+
+    <div class="image-overlay">
+        <span class="project-category">
+            {{ project.categories }}
+        </span>
+    </div>
+</div>
+
 
             <div class="project-content">
 
@@ -140,7 +147,7 @@
                 </div>
 
                 <div class="project-actions">
-                    <button class="btn-support">
+                    <button class="btn-support" data-open-modal="supportProjectModal">
                         <i class="fas fa-hand-holding-heart"></i> Support Project
                     </button>
 
@@ -326,7 +333,8 @@
             </p>
             
             
-            <form id="createProjectForm" action="/create-project" method="POST">
+            <form id="createProjectForm" action="/create-project" method="POST" enctype="multipart/form-data">
+
                 <div class="form-group">
                     <label for="projectTitle">Project Title *</label>
                     <input type="text" id="projectTitle" name="projectTitle" placeholder="Make it catchy and descriptive" required>
@@ -357,13 +365,14 @@
                 </div>
                 
                 <!-- FILE UPLOAD -->
-                <div class="form-group file-upload">
-                     <label>Project Image (optional)</label>
-                     <label class="file-label">
-                     <i class="fas fa-upload"></i> Upload Image
-                     <input type="file" hidden>
-                     </label>
+               <div class="form-group file-upload">
+                <label>Project Image (optional)</label>
+                <label class="file-label">
+                <i class="fas fa-upload"></i> Upload Image
+                <input type="file" name="projectImage">
+                </label>
                 </div>
+
                 
                 <div class="form-group">
                     <label>

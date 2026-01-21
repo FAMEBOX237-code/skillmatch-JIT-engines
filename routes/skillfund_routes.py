@@ -29,6 +29,7 @@ def skillfund_home():
             p.project_description,
             p.funding_goal,
             p.required_skills,
+            p.image,
             GROUP_CONCAT(c.name SEPARATOR ', ') AS categories
         FROM project p
         JOIN project_category pc ON p.id = pc.project_id
@@ -67,6 +68,15 @@ def skillfund_home():
     cursor.execute(query, params)
     projects = cursor.fetchall()
 
+    # Fetch logged-in user details
+    cursor.execute("""
+    SELECT id, full_name, profile_picture, email
+    FROM users
+    WHERE id = %s
+    """, (session["user_id"],))
+    current_user = cursor.fetchone()
+
+
     cursor.close()
     connection.close()
 
@@ -76,5 +86,6 @@ def skillfund_home():
         projects=projects,
         selected_categories=selected_categories,
         sort=sort,
-        search_query=search_query
+        search_query=search_query,
+        current_user=current_user
     )
