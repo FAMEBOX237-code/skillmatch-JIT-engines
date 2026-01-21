@@ -31,10 +31,12 @@ def time_since(created_at):
         return f"{int(days)} days ago"
 
     weeks = days / 7
-    return f"{int(weeks)} weeks ago"
+    if weeks < 4:
+        return f"{int(weeks)} weeks ago"
 
-    months = weeks / 4
-    return f"{int(months)} months ago"
+    months = days / 30
+    if months < 12:
+        return f"{int(months)} months ago"
 
-    years = months / 12
+    years = days / 365
     return f"{int(years)} years ago"
