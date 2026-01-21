@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for, flash, session
+import email
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, request
 from database import get_db_connection
 from werkzeug.security import generate_password_hash, check_password_hash
-import pymysql
 from utils.login_limiter import limiter
-
+import pymysql
 auth = Blueprint("auth", __name__)
 
 
@@ -31,13 +31,13 @@ def register():
 
         sql = """
             INSERT INTO users (full_name, email, password_hash, skills, role)
-            VALUES (%s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s)                   
         """
         cursor.execute(sql, (full_name, email, password_hash, skills, role))
         connection.commit()
 
 
-        cursor.close()
+        cursor.close()             
         connection.close()
 
         flash("Account created successfully!", "success")
@@ -45,10 +45,8 @@ def register():
     
     return render_template("register.html")
         
-@auth.route("/login", methods = ["GET", "POST"])
-
-@limiter.limit("5 per 30 seconds", error_message="Too many login attempts. Please try again later.")
-    
+@auth.route("/login", methods=["GET", "POST"])
+@limiter.limit("5 per 30 seconds" , error_message="Too many login attempts. Please wait before trying again.")
 def login():
     lockout_seconds = request.args.get("lockout_seconds", type=int)
     if request.method == "POST":
@@ -61,13 +59,15 @@ def login():
         user = cursor.fetchone()
         cursor.close()
         connection.close()
-        
+
         if not user or not check_password_hash(user["password_hash"], password):
             flash("Invalid email or password!", "error")
             return redirect(url_for("auth.login"))
+        
         if user["status"] != "active":
-            flash("Your account is suspended contact support.", "error")
+            flash("Your Account is Suspended! Please contact support" , "error")
             return redirect(url_for("auth.login"))
+        
         session.permanent = True
         session["user_id"] = user["id"]
         session["user_name"] = user["full_name"]
@@ -77,39 +77,50 @@ def login():
         elif user["role"] == "sponsor":
             return redirect(url_for("skillfund.skillfund_home"))
         else:
-            return redirect(url_for("admin.admin_dasboard"))
+            return redirect(url_for("admin.admin_dashboard"))
 
-        
-        
+
 
     return render_template("login.html", lockout_seconds=lockout_seconds)
-@auth.route("/verify-email", methods = ["POST"])
+
+@auth.route("/verify-email" , methods=["POST"])
 def verify_email():
     email = request.form["email"]
+
     connection = get_db_connection()
     cursor = connection.cursor()
-    cursor.execute("SELECT id FROM users WHERE email=%s",(email))
+    
+    
+    cursor.execute("SELECT id FROM users WHERE email=%s", (email,))
     user = cursor.fetchone()
     cursor.close()
     connection.close()
+
     if not user:
-        flash("Email not found", "error")
+        flash("Email NOt Found" ,"error")
         return redirect(url_for("auth.login"))
+    
     session["reset_email"] = email
-    flash("Email verified!,reset password", "success")
+    flash("Email Verified!, Reset Password" , "success")
     return redirect(url_for("auth.login", reset = True))
-@auth.route("/reset-password", methods = ["POST"])
-def reset_password():
+
+@auth.route("/reset_password" , methods=["POST"])
+def rest_password():
+    
     if "reset_email" not in session:
-        flash("unauthorized password reset attempt", "error")
+        flash("Unauthorized Password Reset Attempt" , "error")
         return redirect(url_for("auth.login"))
+
     password = request.form["password"]
     confirm_password = request.form["confirm_password"]
+
     if password != confirm_password:
-        flash("password do not match","error")
+        flash("Password Do not Match", "error")
         return redirect(url_for("auth.login"))
+    
     new_password = generate_password_hash(password)
-    email = session ["reset_email"]
+    email = session["reset_email"]
+
     connection = get_db_connection()
     cursor = connection.cursor()
     cursor.execute("UPDATE users SET password_hash=%s WHERE email=%s", (new_password, email))
@@ -117,16 +128,15 @@ def reset_password():
     cursor.close()
     connection.close()
     session.pop("reset_email")
-    flash("password updated successful", "success")
+    flash("Password Updated Successfully!" , "success")
     return redirect(url_for("auth.login"))
-
 
 @auth.route("/logout")
 def logout():
     session.clear()
-    flash("You have been logged out.", "success")
+    flash("Logged out successfully." , "success")
     return redirect(url_for("auth.login"))
 
-
-
-
+@auth.route("/about_us")
+def about_us():
+    return render_template("about.html")

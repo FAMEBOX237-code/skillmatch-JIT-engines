@@ -4,6 +4,8 @@ from routes.home_routes import home
 from routes.dashboard_routes import dashboard
 from utils.time_helpers import time_since
 from datetime import timedelta
+from routes.post_routes import post
+from routes.profile_routes import profile
 from routes.skillfund_routes import skillfund
 from routes.project_routes import project
 from utils.login_limiter import limiter
@@ -24,6 +26,8 @@ app.register_blueprint(auth)
 app.register_blueprint(home)
 app.register_blueprint(skillfund)
 app.register_blueprint(project)
+app.register_blueprint(post)
+app.register_blueprint(profile)
 
 
 

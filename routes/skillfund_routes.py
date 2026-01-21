@@ -1,4 +1,3 @@
-
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from database import get_db_connection
 from utils.auth_utils import login_required
@@ -20,7 +19,7 @@ def skillfund_home():
     # Read filters
     selected_categories = request.args.getlist("category")
     sort = request.args.get("sort", "newest")
-    search_query = request.args.get("q", "").strip()
+    search_query = request.args.get("q", "").strip()  
 
     # Base query
     query = """
@@ -35,7 +34,6 @@ def skillfund_home():
         JOIN project_category pc ON p.id = pc.project_id
         JOIN category c ON pc.category_id = c.id
     """
-
     conditions = []
     params = []
 

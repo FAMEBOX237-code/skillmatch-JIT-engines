@@ -38,3 +38,7 @@ def create_project():
     connection.close()
     flash("Project submitted successfully!", "success")
     return redirect(url_for("skillfund.skillfund_home"))
+
+
+
+

@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - SkillMatch+</title>
-    <link rel="stylesheet" href="../static/css/profilepage.css">
-    <!-- This icon library gives us the bell & profile icons -->
-    <link rel="stylesheet" href="../static/css/header-footer.css">
-    <link rel="stylesheet" href="../static/css/global.css"> 
-    <link rel="stylesheet" href="../static/css/modals.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profilepage.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header-footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modals.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/messages.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -20,8 +21,8 @@
             </div>
 
             <nav class="main-nav">
-                <a href="#">Dashboard</a>
-                <a href="#">SkillFund</a>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/skillfund">SkillFund</a>
             </nav>
 
             <div class="header-right">
@@ -36,186 +37,260 @@
                     <i class="fas fa-caret-down"></i>
 
                     <div class="dropdown-menu">
-                        <a href="#">My Profile</a>
-                        <a href="#">Settings</a>
-                        <a href="#">Logout</a>
+                        <a href="/profilepage">My Profile</a>
+                        <a href="/settings">Settings</a>
+                        <a href="/logout">Logout</a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-
- <!-- ===== PROFILE TOP SECTION ===== -->
-<section class="profile-top">
-    <div class="profile-container">
-
-        <!-- Profile Picture -->
-        <img src="../static/images/avatar.png" alt="Profile Picture" class="profile-avatar">
-        
-        <!-- Name / Role / Rating -->
-        <h2 class="profile-name">USER'S NAME</h2>
-        <p class="profile-role">Student / Sponsor</p>
-        
-        <div class="profile-rating">
-            <span class="stars">⭐ 4.8</span>
-            <span class="reviews">(127 reviews)</span>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-containers">
+          {% for category, message in messages %}
+            <div class="flash-messages {{ category }}">
+                {{ message }}
+            </div>
+          {% endfor %}
         </div>
+      {% endif %}
+    {% endwith %}
 
-        <!-- Buttons -->
-        <div class="profile-actions">
-            <button class="btn-primary">Edit Profile</button>
-            <!-- For other users: <button class="btn-primary">Send Message</button> -->
+    <!-- ===== PROFILE TOP SECTION ===== -->
+    <section class="profile-top">
+        <div class="profile-container">
+            <img src="../static/images/avatar.png" alt="Profile Picture" class="profile-avatar">
+            <h2 class="profile-name">{{ user.full_name }}</h2>
+            <p class="profile-role">{{ user.role | capitalize }}</p>
+            <div class="profile-rating">
+                {% if review_count > 0 %}
+                    <span class="rating"><i class="fas fa-star"></i> {{ avg_rating }}</span>
+                    <span class="rating">({{ review_count }} reviews)</span>
+                {% else %}
+                    <span class="rating">No reviews yet</span>
+                {% endif %}
+            </div>
+            <div class="profile-actions">
+                <button class="btn-primary">Edit Profile</button>
+            </div>
+            <div class="bio-card">
+                <p>
+                    Passionate about web design and innovation.
+                    Add your phone number, location, and a brief bio here
+                </p>
+            </div>
         </div>
+    </section>
 
-        <!-- Bio Section -->
-        <div class="bio-card">
-            <p>
-                Passionate about web design and innovation.
-                Add your phone number, location, and a brief bio here
-            </p>
-        </div>
+    <!-- ===== MY POSTS SECTION  ===== -->
+    <section class="posts-section">
+    <h2 class="section-title">My Posts</h2>
 
-    </div>
-</section>
+    <div class="post-card">
 
-<!-- ===== MY TASKS SECTION ===== -->
-<section class="tasks-section">
-    
-    <h2 class="section-title">My Tasks</h2>
-    <!-- ONGOING TASKS -->
-    <header class="task-status">ONGOING PROJECTS</header> 
-    <div class="task-card">
-        <!-- Task 1 -->
-        <div class="task-item">
-            <p class="task-title">▸ Design a logo for my startup</p>
-            <p class="task-meta">With: Sarah L. ⭐4.9</p>
-            <p class="task-sub">Status: In discussion...</p>
-           <button class="btn-primary" data-open-modal="completeTaskModal">Mark Task as Complete</button>
-        </div>
+          {% for post in my_posts %}
+        <div class="post-item">
+            <div class="post-info">
+                <p class="post-title">{{ post.title }}</p>
+                <span class="interested-count">
+                    ({{ post.interested_count }} interested)
+                </span>
+            </div>
 
-        <!-- Task 2 -->
-        <div class="task-item">
-            <p class="task-title">▸ Python tutoring sessions</p>
-            <p class="task-meta">With: David K. ⭐4.5</p>
-            <p class="task-sub">Status: 2 sessions left</p>
-            <button class="btn-primary" data-open-modal="completeTaskModal">Mark Task as Complete</button>
-        </div>
-      </div>
-    </div>
+            {% if post.task_count > 0 %}
+            <form action="{{ url_for('profile.manage_interests', post_id=post.id) }}" method="get">
+                <button class="status locked">
+                    Collaboration in Progress
+                </button>
+            </form>
 
+            {% elif post.interested_count > 0 %}
+            <form action="{{ url_for('profile.manage_interests', post_id=post.id) }}" method="get">
+                    <button class="btn-primary">
+                        Manage Interests ({{ post.interested_count }})
+                    </button>
+                </form>
 
-    <!-- COMPLETED TASKS -->
-    <header class="task-status">COMPLETED PROJECTS</header>
-    <div class="task-card">
-         <!-- Completed 1 -->
-        <div class="task-item">
-            <p class="task-title">▸ Build a landing page</p>
-            <p class="task-meta">With: Mark N. ⭐4.8</p>
-            <p class="task-sub">Status: Rated ★★★★★</p>
-        </div>
-
-        <!-- Completed 2 -->
-        <div class="task-item">
-            <p class="task-title">▸ Write a business plan</p>
-            <p class="task-meta">With: Raissa L. ⭐4.6</p>
-            <p class="task-sub">Status: Rated ★★★★☆</p>
-        </div>
-       
-    </div>
-</section>
-
-    
-
-    
-    
-
-    <!-- ======= FOOTER START ======= -->
-<footer class="main-footer">
-    <div class="container footer-container">
-        <!-- Top Links -->
-        <div class="footer-links">
-            <a href="#">About Us</a>|
-            <a href="#">Contact</a>|
-            <a href="#">Terms</a>|
-            <a href="#">Privacy Policy</a>
-        </div>
-
-        <!-- Bottom Line -->
-        <div class="footer-bottom">
-            <p>© 2025 SkillMatch+ <span class="separator">|</span> JIT Engines</p>
-        </div>
-    </div>
-</footer>
-
-<!-- TASK COMPLETION MODAL -->
-<div class="modal" id="completeTaskModal">
-    <div class="modal-content">
-        <span class="close-modal">&times;</span>
-
-        <h2>Confirm Task Completion</h2>
-
-        <p class="modal-info">
-            You are about to mark this task as <strong>completed</strong>.
-            This action cannot be undone.
-        </p>
-
-        <div class="form-group">
-            <label>Task</label>
-            <input type="text" value="Design a logo for my startup" disabled>
-        </div>
-
-        <div class="form-group">
-            <label>Collaborator</label>
-            <input type="text" value="Sarah L." disabled>
-        </div>
-
-        <div class="modal-actions">
-            <!-- <button class="btn-secondary close-modal">Cancel</button> -->
-            <button  class="btn-submit" data-next-modal="ratingModal">
-               Yes, Mark as Complete
+            {% else %}
+            <button class="btn-disabled" disabled>
+                No Interests Yet
             </button>
+            {% endif %}
+
+
+</div>
+        
+        {% endfor %}
+
+
+    </div>
+</section>
+
+
+
+    <!-- ===== MY TASKS SECTION ===== -->
+    <section class="tasks-section">
+        <h2 class="section-title">My Tasks</h2>
+        <!-- ONGOING TASKS -->
+        <header class="task-status">ONGOING PROJECTS</header> 
+
+        <div class="task-card">
+
+            {% if ongoing_tasks %}
+                {% for task in ongoing_tasks %}
+                <div class="task-item task-flex">
+                        <div class="task-left">
+                        <p class="task-title">▸ {{ task.title }}</p>
+
+                        <p class="task-meta">
+                            Collaboration between <strong>You</strong>  
+                            and <strong>
+                                        <span class="rating">
+                                            {{ task.collaborator_name }}
+                                            {% if task.collaborator_rating %}
+                                                <i class="fas fa-star"></i> {{ task.collaborator_rating }}
+                                            {% else %}
+                                                <i class="fas fa-star"></i> New
+                                            {% endif %}
+                                        </span>
+                                </strong>
+                        </p>
+
+                        <p class="task-sub">
+                            Status: {{ task.status }} <span style="color: green"><i class="fas fa-check"></i></span>
+                        </p>
+                        </div>
+                        <div class="task-right">
+                            {% if task.status == 'ongoing' and task.worker_id == session["user_id"] %}
+                            <form method="POST" action="/tasks/{{ task.task_id }}/complete">
+                                <button class="btn-primary">
+                                    Mark Task as Complete
+                                </button>
+                            </form>
+
+                            {% elif task.status == 'completed_pending' and task.creator_id == session["user_id"] %}
+                            <form method="GET" action="{{ url_for('profile.rate_task', task_id=task.task_id) }}">
+                                <button
+                                    class="btn-primary"
+
+                                >
+                                    Confirm & Rate
+                                </button>
+
+                            </form>
+
+                        {% else %}
+                            <p class="task-sub">Waiting for confirmation…</p>
+                        {% endif %}
+                        </div>
+
+
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="task-item">
+                    <p class="task-sub">No ongoing projects yet.</p>
+                </div>
+            {% endif %}
 
         </div>
-    </div>
-</div>
 
 
+      
+        <!-- COMPLETED TASKS -->
+        <header class="task-status">COMPLETED PROJECTS</header>
+        <div class="task-card">
+
+        {% for task in completed_tasks %}
+            <div class="task-item">
+                <p class="task-title">▸ {{ task.title }}</p>
+                <p class="task-meta">
+                            Collaboration between <strong>You</strong>  
+                            and <strong>
+                                        {{ task.collaborator_name }}
+                                        <span class="rating">
+                                        {% if task.collaborator_rating %}
+                                            <i class="fas fa-star"></i> {{ task.collaborator_rating }}
+                                        {% else %}
+                                            <i class="fas fa-star"></i> New
+                                        {% endif %}
+                                        </span>
+
+                                </strong>
+                </p>
+                <p class="task-sub">Status: {{ task.status }} <span style="color: green;"><i class="fas fa-check"></i></span></p>
+            </div>
+        {% else %}
+            <p class="empty-text">No completed tasks yet.</p>
+        {% endfor %}
+
+        </div>
+
+    </section>
+
+    
+    <!-- ======= FOOTER START ======= -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="/about">About Us</a>|
+                <a href="/contact">Contact</a>|
+                <a href="/terms">Terms</a>|
+                <a href="/privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 SkillMatch+ <span class="separator">|</span> JIT Engines</p>
+            </div>
+        </div>
+    </footer>
+
+    
+
+    
 <!-- RATING MODAL -->
-<div class="modal" id="ratingModal">
+<div class="modal {% if task_to_rate %}show{% endif %}" id="ratingModal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
 
         <h2>Rate Your Collaborator</h2>
 
+        {% if task_to_rate %}
         <p class="modal-info">
-            Please rate your experience working with <strong>Sarah L.</strong>
+            Please rate your experience working with
+            <strong>{{ task_to_rate.worker_name }}</strong>
         </p>
 
-        <div class="form-group">
-            <label>Rating</label>
-            <div class="radio-group">
-                <label><input type="radio" name="rating" value="1"> ⭐</label>
-                <label><input type="radio" name="rating" value="2"> ⭐⭐</label>
-                <label><input type="radio" name="rating" value="3"> ⭐⭐⭐</label>
-                <label><input type="radio" name="rating" value="4"> ⭐⭐⭐⭐</label>
-                <label><input type="radio" name="rating" value="5"> ⭐⭐⭐⭐⭐</label>
+        <form method="POST" action="{{ url_for('profile.rate_task', task_id=task_to_rate.task_id) }}">
+            <div class="form-group">
+                <label>Rating</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="rating" value="1" required> ⭐</label>
+                    <label><input type="radio" name="rating" value="2"> ⭐⭐</label>
+                    <label><input type="radio" name="rating" value="3"> ⭐⭐⭐</label>
+                    <label><input type="radio" name="rating" value="4"> ⭐⭐⭐⭐</label>
+                    <label><input type="radio" name="rating" value="5"> ⭐⭐⭐⭐⭐</label>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>Review (optional)</label>
-            <textarea placeholder="Write a short review..."></textarea>
-        </div>
+            <div class="form-group">
+                <label>Review (optional)</label>
+                <textarea name="review" placeholder="Write a short review..."></textarea>
+            </div>
 
-        <div class="modal-actions">
-            <!-- <button class="btn-secondary close-modal">Skip for Now</button> -->
-            <button class="btn-submit">
-                Submit Rating
-            </button>
-        </div>
+            <div class="modal-actions">
+                <button type="submit" class="btn-submit">Submit Rating</button>
+            </div>
+        </form>
+        {% endif %}
     </div>
 </div>
-<script src="../static/js/modals.js"></script>
+
+
+ 
+
+    <script src="../static/js/modals.js"></script>
+    
 </body>
 </html>
