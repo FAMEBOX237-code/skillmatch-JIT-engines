@@ -189,17 +189,29 @@ def dashboard_home():
     skills = cursor.fetchall()
     
 
+
+# Fetch logged-in user details for header profile image
+    cursor.execute("""
+    SELECT id, full_name, profile_picture, email
+    FROM users
+    WHERE id = %s
+    """, (session["user_id"],))
+    current_user = cursor.fetchone()
+
+
     cursor.close()
     db.close()
 
     return render_template(
-        "dashboard.html",
-        posts=posts,
-        skills=skills,
-        new_posts_today=new_posts_today,
-        my_posts=my_posts,
-        selected_skills=selected_skills
-    )
+    "dashboard.html",
+    posts=posts,
+    skills=skills,
+    new_posts_today=new_posts_today,
+    my_posts=my_posts,
+    selected_skills=selected_skills,
+    current_user=current_user 
+)
+
 
 
 

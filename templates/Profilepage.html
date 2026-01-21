@@ -33,11 +33,11 @@
 
                 <div class="profile-dropdown">
                     <div></div>
-                    <img src="../static/images/avatar.png" alt="Profile" class="profile-pic">
+                    <img src="{{ url_for('static', filename='images/' + (user.profile_picture or 'avatar.png')) }}" alt="Profile" class="profile-pic">
                     <i class="fas fa-caret-down"></i>
 
                     <div class="dropdown-menu">
-                        <a href="/profilepage">My Profile</a>
+                        <a href="/profile">My Profile</a>
                         <a href="/settings">Settings</a>
                         <a href="/logout">Logout</a>
                     </div>
@@ -61,7 +61,10 @@
     <!-- ===== PROFILE TOP SECTION ===== -->
     <section class="profile-top">
         <div class="profile-container">
-            <img src="../static/images/avatar.png" alt="Profile Picture" class="profile-avatar">
+           <img src="{{ url_for('static', filename='images/' + (user.profile_picture or 'avatar.png')) }}"
+     class="profile-avatar" alt="Profile Picture">
+
+
             <h2 class="profile-name">{{ user.full_name }}</h2>
             <p class="profile-role">{{ user.role | capitalize }}</p>
             <div class="profile-rating">
@@ -73,15 +76,17 @@
                 {% endif %}
             </div>
             <div class="profile-actions">
-                <button class="btn-primary">Edit Profile</button>
+                <a href="{{ url_for('profile.edit_profile') }}" class="btn-primary">
+    Edit Profile
+</a>
+
             </div>
             <div class="bio-card">
-                <p>
-                    Passionate about web design and innovation.
-                    Add your phone number, location, and a brief bio here
-                </p>
-            </div>
-        </div>
+    <p>{{ user.bio or "No bio added yet." }}</p>
+    <p><strong>Skills:</strong> {{ user.skills or "No skills added yet." }}</p>
+</div>
+
+        
     </section>
 
     <!-- ===== MY POSTS SECTION  ===== -->
