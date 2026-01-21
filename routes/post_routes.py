@@ -23,8 +23,8 @@ def create_post():
         flash("Title must be at least 5 characters.", "error")
         return redirect(url_for("dashboard.dashboard_home"))
 
-    if not description or len(description) < 25:
-        flash("Description must be at least 25 characters.", "error")
+    if not description or len(description) < 128:
+        flash("Description must be at least 128 characters.", "error")
         return redirect(url_for("dashboard.dashboard_home"))
 
     if not skills:

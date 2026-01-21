@@ -244,7 +244,7 @@
              <label class="filter-option">
               <input
                 type="checkbox"
-                name="category"
+                name="category[]"
                 value="{{ cat.id }}"
                 {% if cat.id|string in selected_categories %}checked{% endif %}
             >
