@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.secret_key="skillmatch_secret_key"
 app.jinja_env.filters['time_since'] = time_since
 
-app.permanent_session_lifetime =  timedelta(days=1)  # Set session timeout to 30 minutes
+app.permanent_session_lifetime =  timedelta(days=1)  
 
 limiter.init_app(app)
 register_error_handlers(app)
