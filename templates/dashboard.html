@@ -6,6 +6,7 @@
     <title>Dashboard • SkillMatch+</title>
     <link rel="stylesheet" href="../static/css/global.css">
     <link rel="stylesheet" href="../static/css/header-footer.css">
+    <link rel="stylesheet" href="../static/css/messages.css">
     <link rel="stylesheet" href="../static/css/dashboard.css"> 
     <link rel="stylesheet" href="../static/css/modals.css"> 
     <link rel="stylesheet" href="../static/css/messages.css">
@@ -18,11 +19,11 @@
     <header class="main-header">
         <div class="container">
             <div class="logo">
-                <h2>SkillMatch+</h2>
+                <h2><i class="fas fa-seedling"></i> SkillMatch+</h2>
             </div>
             <nav class="main-nav">
                 <a href="dashboard.html" class="active">Dashboard</a>
-                <a href="skillfund.html">SkillFund</a>
+                <a href="/skillfund">SkillFund</a>
             </nav>
             <div class="header-right">
                 <div class="notification">
@@ -34,20 +35,16 @@
                     <i class="fas fa-caret-down"></i>
                     <div class="dropdown-menu">
                         <a href="/profile">My Profile</a>
-                        <a href="/about">About Us</a>
+                        <a href="about.html">About Us</a>
                         <a href="/settings">Settings</a>
                         <a href="/logout">Logout</a>
-
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-
-
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
+{% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flash-containers">
           {% for category, message in messages %}
@@ -60,10 +57,6 @@
     {% endwith %}
 
 
-
-
-
-
 <!-- DASHBOARD WELCOME HERO -->
 <section class="dashboard-welcome">
     <div class="container">
@@ -71,7 +64,7 @@
             
             <div class="welcome-text">
                 <h1 class="welcome-title">
-                    Welcome back, <span class="user-name">{{ session.user_name }}</span>!
+                    Welcome back, <span class="user-name">{{session.user_name}}</span>!
                 </h1>
                 <p class="welcome-subtitle">
                     Ready to trade skills, fund ideas, or find your next collaborator?
@@ -82,7 +75,7 @@
                         <i class="fas fa-plus"></i> Create New Post
                     </button>
 
-                    <a href="skillfund.html" class="btn-secondary">
+                    <a href="/skillfund" class="btn-secondary">
                         <i class="fas fa-lightbulb"></i> Post a SkillFund Idea
                     </a>
                 </div>
@@ -90,21 +83,14 @@
                 <div class="welcome-stats">
                     <div class="stat">
                         <h3>{{ new_posts_today }}</h3>
-                        <p>New<br> Posts<br>Today</p>
+                        <p>New Posts<br> Today</p>
                     </div>
                     <div class="stat">
                         <h3>{{ my_posts }}</h3>
-                        <p>My<br>Posts</p>  
+                        <p>my personal<br> Posts</p>
                     </div>
-                    <!-- <div class="stat">
-                        <h3>{{ my_collaborations }}</h3>
-                        <p>My<br>Collaborations</p>
-                    </div> -->
                 </div>
             </div>
-
-           
-    
     </div>
     <div class="wave-divider"></div>
 </section>
@@ -122,7 +108,6 @@
             <div class="posts-feed">
                 <div class="feed-header">
                     <h2>Post Feeds</h2>
-
                     <form method="GET" action="/dashboard">
                         <!-- Preserve existing filters -->
                         <input type="hidden" name="search" value="{{ request.args.get('search', '') }}">
@@ -166,38 +151,30 @@
                     </form>
                 </div>
 
-
-                
-
+                <!-- POST CARD 1 – REQUEST -->
                 {% for post in posts %}
                 <article class="post-card {{ post.post_type }}">
 
                     <div class="post-header">
                         <img src="{{ post.profile_picture or '/static/images/avatar.png' }}" 
-                             class="user-avatar">
+                            class="user-avatar">
 
                         <div class="user-info">
                             <h4>
                                 {{ post.full_name }}
                                 <span class="post-time">
-                                    <!-- {{ post.created_at }} -->
-                                      {{ post.created_at | time_since }}
+                                    {{ post.created_at| time_since }}
                                 </span>
                             </h4>
                             <div class="rating">
-                                <i class="fas fa-star"></i>
-                                {% if post.user_rating %}
-                                    {{ post.user_rating }}
-                                {% else %}
-                                    New
-                                {% endif %}
+                    <i class="fas fa-star"></i> 4.9
                             </div>
-
                         </div>
 
-                        <span class="post-type {{ post.post_type }}">
-                            {{ post.post_type|capitalize }}
-                        </span>
+                    <span class="post-type {{ post.post_type }}">
+                    {{ post.post_type |capitalize }} 
+                            
+                    </span>
                     </div>
 
                     <div class="post-content">
@@ -212,37 +189,18 @@
                     </div>
 
                     <div class="post-footer">
-                        {% if post.user_id != session["user_id"] and post.is_active == 1 %}
-                        <form method="POST" action="/posts/{{ post.id }}/interest">
-                            <button type="submit" class="btn-interested">
-                                I'm Interested
-                            </button>
-                        </form>
-                        {% else %}
-                        <button class="btn-disabled" disabled>
-                            Not Available
+                        <form action="/posts/{{ post.id }}/interest" method="POST">
+                        <button class="btn-interested">
+                <i class="fas fa-check"></i> I'm Interested
                         </button>
-                        {% endif %}
+                    </form>
 
-
-                    {% if post.email %}
-                        <a
-                            href="mailto:{{ post.email }}
-                            ?subject=SkillMatch+ Collaboration Inquiry
-                            &body=Hello {{ post.full_name }},%0D%0A%0D%0AI saw your post on SkillMatch+ and would like to collaborate.%0D%0A%0D%0ARegards,"
-                            class="btn-message"
-                        >
-                            <i class="fas fa-comment"></i> Message
-                        </a>
-                    {% else %}
-                        <button class="btn-disabled" disabled>
-                            Message Unavailable
+                        <button class="btn-message">
+                    <i class="fas fa-comment"></i> Message
                         </button>
-                    {% endif %}
-
 
                         <button class="btn-report" data-open-modal="reportPostModal">
-                              <i class="fas fa-flag"></i>
+                    <i class="fas fa-flag"></i>
                         </button>
                     </div>
 
@@ -250,14 +208,13 @@
                 {% else %}
                 <p>No posts yet. Be the first to create one!</p>
                 {% endfor %}
-
-
-
+                            
+                <!-- More posts will go here -->
             </div>
 
             <!-- FILTERS SIDEBAR (RIGHT SIDE) -->
 <aside class="filters-sidebar">
-    <form method="GET" action="/dashboard">
+    <form action="/dashboard" method="GET">
     <div class="filters-card">
         <h3 class="filters-title">
             <i class="fas fa-sliders-h"></i> Filter Feed
@@ -266,34 +223,33 @@
         <!-- Search Bar -->
         <div class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text"  name="search" value="{{ request.args.get('search', '') }}" placeholder="Search posts, skills, users..." class="search-input">
+            <input type="text" placeholder="Search posts, skills, users..." name="search" value="{{ request.args.get('search','')}}" class="search-input">
         </div>
-    
+
         <!-- Post Type Filter -->
         <div class="filter-group">
             <h4>Post Type</h4>
-            
             <label class="filter-option">
-                <input type="checkbox" name="type" value="request"
-           {% if request.args.get('type') == 'request' %}checked{% endif %}> <span class="type request">Requests</span>
+                <input type="checkbox" name="type" value="request" {% if request.args.get('type') == 'request' %}checked{% endif %}> <span class="type request">Requests</span>
             </label>
             <label class="filter-option">
-                <input type="checkbox" name="type" value="offer"
-           {% if request.args.get('type') == 'offer' %}checked{% endif %}> <span class="type offer">Offers</span>
+                <input type="checkbox" name="type" value="offer" {% if request.args.get('type') == 'offer' %}checked{% endif %}> <span class="type offer">Offers</span>
             </label>
         </div>
 
         <!-- Skill Categories -->
         <div class="filter-group">
             <h4>Skill Categories</h4>
-            <select name="skills" multiple size="6" class="skills-select">
-            {% for skill in skills %}
-                    <option value="{{ skill.id }}"
-                            {% if skill.id|string in selected_skills %}selected{% endif %}>
-                            {{ skill.name }}
+            <select class="skills-select" name="skills" multiple size="6">
+                {% for skill in skills%}
+                    <option value="{{skill.id}}" 
+                    {% if skill.id|string in selected_skills %}selected{% endif%}>
+                        {{ skill.name }}
                     </option>
-            {% endfor %}
-            </select>
+                {% endfor %}
+                </select>
+                
+                
         </div>
 
         <!-- Availability / Level -->
@@ -311,6 +267,7 @@
         </div>
 
         <!-- Rating Filter -->
+         <!-- Rating Filter -->
         <div class="filter-group">
     <h4>Minimum Rating</h4>
 
@@ -335,11 +292,9 @@
 
         <!-- Apply / Reset -->
         <div class="filter-actions">
-            <button type="submit" class="btn-apply">Apply Filters</button>
-            
-            <a href="/dashboard" class="btn-reset" >Reset All</a>
+            <button type="submit"class="btn-apply">Apply Filters</button>
+            <a href="/dashboard" class="btn-reset">Reset All</a>
         </div>
-    
     </div>
     </form>
 </aside>
@@ -377,13 +332,12 @@
     <div class="modal-content">
         <span class="close-modal">&times;</span>
         <h2>Create New Post</h2>
-
         <form id="createPostForm" action="/create-post" method="POST">
             <div class="form-group">
                 <label>Post Type:</label>
                 <div class="radio-group">
-                    <label><input type="radio" name="postType" value="offer" checked> Offer a Skill</label>
-                    <label><input type="radio" name="postType" value="request"> Request Help</label>
+                    <label><input type="radio" name="post_type" value="offer" checked> Offer a Skill</label>
+                    <label><input type="radio" name="post_type" value="request"> Request Help</label>
                 </div>
             </div>
             <div class="form-group">
@@ -392,16 +346,17 @@
             </div>
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" placeholder="Briefly describe what you offer or need help with." required></textarea>
+                <textarea id="description" name = "description" placeholder="Briefly describe what you offer or need help with. You have a limit of 128 characters" maxlength="128" required></textarea>
             </div>
             <div class="form-group">
-                <label for="skills">Skills:</label>
-                <select class="skills-select" name="skills[]" multiple required>
-                    {% for skill in skills %}
-                        <option value="{{ skill.id }}">{{ skill.name }}</option>
-                    {% endfor %}
+                <label for="category">Skill Category:</label>
+            <select class="skills-select" name="skills[]" multiple required>
+                {% for skill in skills%}
+                    <option value="{{skill.id}}">
+                        {{ skill.name }}
+                    </option>
+                {% endfor %}
                 </select>
-            </div>
             <div class="modal-actions">
                 <button type="submit" class="btn-apply">Submit Post</button>
                 <!-- <button type="button" class="btn-reset close-modal">Cancel</button> -->
@@ -454,6 +409,6 @@
 </div>
 
 
-<script src="../../static/js/modals.js"></script>
+<script src="../static/js/modals.js"></script>
 </body>
 </html>

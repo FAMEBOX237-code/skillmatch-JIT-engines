@@ -1,9 +1,9 @@
+import re
 from flask import Blueprint, render_template, request, redirect, session, url_for, flash, session
 from database import get_db_connection
+from utils.validator import validate_email, validate_password
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
-from utils.login_limiter import limiter
-
 auth = Blueprint("auth", __name__)
 
 
@@ -17,7 +17,18 @@ def register():
         confirm_password = request.form["confirm-password"]
         role = request.form["role"]
 
+        #Validations
+        is_valid_email, email = validate_email(email)
+        if not is_valid_email:
+            flash(email, "error")
+            return redirect(url_for("auth.register"))
 
+        is_valid_password, raw_password = validate_password(raw_password)
+        if not is_valid_password:
+            flash(raw_password, "error")
+            return redirect(url_for("auth.register"))
+
+         # Check if passwords match
 
         if raw_password != confirm_password:
             flash("Password do not match.", "error")
@@ -46,11 +57,8 @@ def register():
     return render_template("register.html")
         
 @auth.route("/login", methods = ["GET", "POST"])
-
-@limiter.limit("5 per 30 seconds", error_message="Too many login attempts. Please try again later.")
     
 def login():
-    lockout_seconds = request.args.get("lockout_seconds", type=int)
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -75,14 +83,14 @@ def login():
         if user["role"] == "student":
             return redirect(url_for("dashboard.dashboard_home"))
         elif user["role"] == "sponsor":
-            return redirect(url_for("skillfund.skillfund_home"))
+            return redirect(url_for("dashboard.skillfunds"))
         else:
             return redirect(url_for("admin.admin_dasboard"))
 
         
         
 
-    return render_template("login.html", lockout_seconds=lockout_seconds)
+    return render_template("login.html")
 @auth.route("/verify-email", methods = ["POST"])
 def verify_email():
     email = request.form["email"]
@@ -126,7 +134,3 @@ def logout():
     session.clear()
     flash("You have been logged out.", "success")
     return redirect(url_for("auth.login"))
-
-
-
-

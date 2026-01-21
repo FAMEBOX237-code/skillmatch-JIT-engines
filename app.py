@@ -1,28 +1,32 @@
-from routes.auth_routes import auth 
-from flask import dashboard Flask
-import pymysql
-from routes.post_routes import post
+from routes.auth_routes import auth
+from flask import Flask
 from routes.dashboard_routes import dashboard
 from utils.time_helpers import time_since
 from datetime import timedelta
-from flask import error_handler 
-from validators import validate_email, validate_password
-from login_error_handler import handle_login_error
+from routes.skillfund_routes import skillfund
+from routes.project_routes import project
+from utils.error_handler import init_error_handling
+from utils.login_error_handler import handle_login_error
+from utils.validator import validate_email, validate_password
 
 
 app = Flask(__name__)
 app.secret_key="skillmatch_secret_key"
-app.jinja_env.filters['time_since'] =time_since
-app.init_error_handling(app)
+app.jinja_env.filters['time_since'] = time_since
 
 
 
-app.permenent_session_lifetime = timedelta(days=1)
 
-app.register_blueprint(auth)
+app.permanent_session_lifetime =  timedelta(days=1)  # Set session timeout to 30 minutes
+
+
+
 app.register_blueprint(dashboard)
-app.register_blueprint(post)
+app.register_blueprint(auth)
+app.register_blueprint(skillfund)
+app.register_blueprint(project)
 
+init_error_handling(app)
 
 @app.after_request
 def disable_cache(response):
@@ -30,6 +34,10 @@ def disable_cache(response):
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
+
+
+
+
 
 
 if __name__ == "__main__":
